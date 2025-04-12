@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { safeLocalStorage } from '@/lib/utils';
-import { Language } from '@/i18n/types';
+import { Language, TranslationKey, translations } from '@/i18n/types';
 
 type LanguageProviderProps = {
   children: React.ReactNode;
@@ -12,11 +12,13 @@ type LanguageProviderProps = {
 type LanguageProviderState = {
   language: Language;
   setLanguage: (language: Language) => void;
+  t: (key: TranslationKey) => string;
 };
 
 const initialState: LanguageProviderState = {
   language: 'en',
   setLanguage: () => null,
+  t: () => '',
 };
 
 const LanguageProviderContext = createContext<LanguageProviderState>(initialState);
@@ -43,6 +45,9 @@ export function LanguageProvider({
       if (!mounted) return;
       storage.setItem('language', lang);
       setLanguage(lang);
+    },
+    t: (key: TranslationKey) => {
+      return translations[language][key] || key;
     },
   };
 
