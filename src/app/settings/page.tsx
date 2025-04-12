@@ -67,9 +67,43 @@ export default function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-muted-foreground">
-                More preferences coming soon...
-              </p>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <p className="font-medium">Email Notifications</p>
+                    <p className="text-sm text-muted-foreground">
+                      Receive updates about new features and promotions
+                    </p>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    Enable
+                  </Button>
+                </div>
+                <Separator />
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <p className="font-medium">Dark Mode</p>
+                    <p className="text-sm text-muted-foreground">
+                      Switch between light and dark themes
+                    </p>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    System
+                  </Button>
+                </div>
+                <Separator />
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <p className="font-medium">Language</p>
+                    <p className="text-sm text-muted-foreground">
+                      Choose your preferred language
+                    </p>
+                  </div>
+                  <Button variant="outline" size="sm">
+                    English
+                  </Button>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>

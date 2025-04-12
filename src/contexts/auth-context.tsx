@@ -1,41 +1,53 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect } from 'react';
+import { safeLocalStorage } from '@/lib/utils';
 
-interface User {
-  id: string;
-  email: string;
-  name: string;
-}
-
-interface AuthContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
+type AuthContextType = {
+  isAuthenticated: boolean;
+  user: any | null;
+  login: (userData: any) => void;
   logout: () => void;
-}
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<any | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const storage = safeLocalStorage();
 
   useEffect(() => {
-    // Check for existing auth state
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    setMounted(true);
+    // Only run on client side
+    const savedUser = storage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+      setIsAuthenticated(true);
     }
   }, []);
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+  const login = (userData: any) => {
+    if (!mounted) return;
+    setUser(userData);
+    setIsAuthenticated(true);
+    storage.setItem('user', JSON.stringify(userData));
   };
 
+  const logout = () => {
+    if (!mounted) return;
+    setUser(null);
+    setIsAuthenticated(false);
+    storage.removeItem('user');
+  };
+
+  if (!mounted) {
+    return null; // Don't render anything during SSR
+  }
+
   return (
-    <AuthContext.Provider value={{ user, setUser, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

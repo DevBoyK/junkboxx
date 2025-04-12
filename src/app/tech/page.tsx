@@ -1,141 +1,178 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ImageCard } from "@/components/ui/image-card";
-import { ArrowRight } from "lucide-react";
-
-const featuredProducts = [
-  {
-    title: "iPhone 15 Pro",
-    category: "Smartphones",
-    image: "/images/tech/iphone-15-pro.jpg",
-    price: "$999",
-    description: "The most powerful iPhone ever"
-  },
-  {
-    title: "MacBook Pro M3",
-    category: "Laptops",
-    image: "/images/tech/macbook-pro.jpg",
-    price: "$1,999",
-    description: "Revolutionary performance"
-  },
-  {
-    title: "AirPods Pro",
-    category: "Audio",
-    image: "/images/tech/airpods-pro.jpg",
-    price: "$249",
-    description: "Immersive sound experience"
-  }
-];
-
-const latestNews = [
-  {
-    title: "Apple Vision Pro Launch",
-    date: "Feb 2, 2024",
-    image: "/images/tech/vision-pro.jpg",
-    category: "Product Launch"
-  },
-  {
-    title: "iOS 17 Features",
-    date: "Jan 25, 2024",
-    image: "/images/tech/ios-17.jpg",
-    category: "Software"
-  }
-];
+import { useEffect, useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 export default function TechPage() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative h-[60vh] w-full overflow-hidden">
-        <video
-          autoPlay
-          muted
-          loop
-          className="absolute inset-0 h-full w-full object-cover"
-          src="/videos/tech-hero.mp4"
-        />
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white">
-          <h1 className="mb-4 text-5xl font-bold">Tech</h1>
-          <p className="max-w-2xl text-lg">
-            Explore the latest in technology. From smartphones to smart homes, stay ahead with cutting-edge innovations.
+    <div className="tech-page min-h-screen">
+      <div className="container mx-auto px-4 py-8">
+        {/* Hero Section */}
+        <section className="mb-12 text-center">
+          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[hsl(var(--tech-primary))] to-[hsl(var(--tech-secondary))] bg-clip-text text-transparent">
+            Urban Tech & Gaming Hub
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Where street culture meets cutting-edge technology. Discover the latest in gaming, urban tech, and digital lifestyle.
           </p>
-        </div>
-      </section>
+        </section>
 
-      {/* Featured Products */}
-      <section className="mx-auto max-w-7xl px-4 py-16">
-        <h2 className="mb-8 text-3xl font-bold">Featured Products</h2>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {featuredProducts.map((product) => (
-            <ImageCard
-              key={product.title}
-              src={product.image}
-              alt={product.title}
-              className="aspect-[4/5]"
-            >
-              <div className="space-y-2 text-white">
-                <span className="inline-block rounded bg-primary px-2 py-1 text-xs">
-                  {product.category}
-                </span>
-                <h3 className="text-xl font-semibold">{product.title}</h3>
-                <p className="text-sm text-gray-300">{product.description}</p>
-                <p className="font-medium">{product.price}</p>
-              </div>
-            </ImageCard>
-          ))}
-        </div>
-      </section>
-
-      {/* Latest News */}
-      <section className="bg-muted/50 px-4 py-16">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="mb-8 text-3xl font-bold">Latest News</h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            {latestNews.map((news) => (
-              <ImageCard
-                key={news.title}
-                src={news.image}
-                alt={news.title}
-                className="aspect-video"
-              >
-                <div className="space-y-2 text-white">
-                  <span className="inline-block rounded bg-primary px-2 py-1 text-xs">
-                    {news.category}
-                  </span>
-                  <h3 className="text-2xl font-semibold">{news.title}</h3>
-                  <p className="text-sm text-gray-300">{news.date}</p>
+        {/* Featured Products */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-6">Featured Tech</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>Razer Blade 15</CardTitle>
+                <CardDescription>Gaming Laptop</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  The ultimate gaming laptop for streamers and content creators. Features RTX 4070 and 240Hz display.
+                </p>
+                <div className="flex justify-between items-center">
+                  <span className="text-2xl font-bold">$2,499</span>
+                  <Button variant="secondary">View Details</Button>
                 </div>
-              </ImageCard>
-            ))}
-          </div>
-        </div>
-      </section>
+              </CardContent>
+            </Card>
 
-      {/* Newsletter */}
-      <section className="mx-auto max-w-7xl px-4 py-16">
-        <div className="rounded-lg bg-muted p-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-4 text-2xl font-bold">Stay Updated</h2>
-            <p className="mb-6 text-muted-foreground">
-              Subscribe to our newsletter for the latest tech news, product reviews, and exclusive deals.
-            </p>
-            <div className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1"
-              />
-              <Button>
-                Subscribe
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>PlayStation 5</CardTitle>
+                <CardDescription>Gaming Console</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  Next-gen gaming with 4K resolution, ray tracing, and ultra-fast SSD. Experience gaming like never before.
+                </p>
+                <div className="flex justify-between items-center">
+                  <span className="text-2xl font-bold">$499</span>
+                  <Button variant="secondary">View Details</Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>Meta Quest 3</CardTitle>
+                <CardDescription>VR Headset</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground mb-4">
+                  Step into the metaverse with advanced mixed reality and high-resolution displays.
+                </p>
+                <div className="flex justify-between items-center">
+                  <span className="text-2xl font-bold">$499</span>
+                  <Button variant="secondary">View Details</Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
-        </div>
-      </section>
+        </section>
+
+        {/* Gaming Setups */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-6">Featured Gaming Setups</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>Streamer's Paradise</CardTitle>
+                <CardDescription>By @UrbanGamer</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Professional streaming setup with dual monitors, RGB lighting, and high-end audio equipment.
+                  </p>
+                  <div className="flex gap-2">
+                    <Badge variant="secondary">Streaming</Badge>
+                    <Badge variant="secondary">RGB</Badge>
+                    <Badge variant="secondary">Audio</Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>Competitive Edge</CardTitle>
+                <CardDescription>By @ProGamer</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Tournament-ready setup with 360Hz monitor, mechanical keyboard, and precision mouse.
+                  </p>
+                  <div className="flex gap-2">
+                    <Badge variant="secondary">Esports</Badge>
+                    <Badge variant="secondary">Performance</Badge>
+                    <Badge variant="secondary">Gaming</Badge>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Latest News */}
+        <section className="mb-12">
+          <h2 className="text-2xl font-bold mb-6">Latest in Tech Culture</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>The Intersection of Streetwear and Tech</CardTitle>
+                <CardDescription>By TechStyle Magazine</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  How urban fashion brands are embracing technology to create innovative wearables and digital experiences.
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card/50 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle>Hip Hop's Influence on Gaming Culture</CardTitle>
+                <CardDescription>By UrbanTech Weekly</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  Exploring how hip hop artists are shaping the future of gaming and virtual experiences.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Newsletter Signup */}
+        <section className="text-center">
+          <Card className="bg-card/50 backdrop-blur-sm max-w-2xl mx-auto">
+            <CardHeader>
+              <CardTitle>Stay Updated</CardTitle>
+              <CardDescription>Get the latest in urban tech and gaming culture</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex gap-2">
+                <Input placeholder="Enter your email" className="flex-1" />
+                <Button variant="secondary">Subscribe</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+      </div>
     </div>
   );
 } 

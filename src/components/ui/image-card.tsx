@@ -1,40 +1,45 @@
-import * as React from 'react';
-import Image from 'next/image';
-import { cn } from '@/lib/utils';
+"use client";
+
+import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 interface ImageCardProps extends React.HTMLAttributes<HTMLDivElement> {
   src: string;
   alt: string;
-  className?: string;
+  fallback?: React.ReactNode;
 }
 
-const ImageCard = React.forwardRef<HTMLDivElement, ImageCardProps>(
-  ({ src, alt, className, children, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className={cn(
-          'group relative overflow-hidden rounded-lg',
-          className
-        )}
-        {...props}
-      >
-        <Image
+export function ImageCard({
+  src,
+  alt,
+  className,
+  children,
+  fallback,
+  ...props
+}: ImageCardProps) {
+  const [error, setError] = useState(false);
+
+  return (
+    <div
+      className={cn(
+        "group relative overflow-hidden rounded-lg",
+        className
+      )}
+      {...props}
+    >
+      {error ? (
+        fallback
+      ) : (
+        <img
           src={src}
           alt={alt}
-          width={500}
-          height={500}
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          onError={() => setError(true)}
         />
-        {children && (
-          <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-4">
-            {children}
-          </div>
-        )}
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+        {children}
       </div>
-    );
-  }
-);
-ImageCard.displayName = 'ImageCard';
-
-export { ImageCard }; 
+    </div>
+  );
+} 

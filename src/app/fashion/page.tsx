@@ -7,22 +7,25 @@ import { ArrowRight } from "lucide-react";
 
 const featuredCollections = [
   {
-    title: 'Streetwear Essentials',
-    image: '/images/fashion/streetwear.jpg',
+    title: 'Urban Essentials',
+    image: '/images/fashion/urban-essentials.jpg',
     items: '25 items',
-    description: 'Urban style meets comfort'
+    description: 'Core pieces for the modern streetwear enthusiast',
+    category: 'Streetwear'
   },
   {
-    title: 'Luxury Accessories',
-    image: '/images/fashion/luxury.jpg',
+    title: 'Hip Hop Heritage',
+    image: '/images/fashion/hiphop-heritage.jpg',
     items: '15 items',
-    description: 'Timeless elegance'
+    description: 'Classic styles that defined hip hop fashion',
+    category: 'Hip Hop'
   },
   {
-    title: 'Seasonal Trends',
-    image: '/images/fashion/trends.jpg',
+    title: 'Gaming Culture',
+    image: '/images/fashion/gaming-culture.jpg',
     items: '30 items',
-    description: 'Spring/Summer 2024'
+    description: 'Where gaming meets street fashion',
+    category: 'Gaming'
   }
 ];
 
@@ -32,21 +35,45 @@ const featuredProducts = [
     category: 'Streetwear',
     image: '/images/fashion/hoodie.jpg',
     price: '$89',
-    description: 'Premium cotton blend'
+    description: 'Premium cotton blend with urban-inspired graphics'
   },
   {
-    title: 'Designer Sneakers',
+    title: 'Limited Edition Sneakers',
     category: 'Footwear',
     image: '/images/fashion/sneakers.jpg',
     price: '$199',
-    description: 'Limited edition'
+    description: 'Exclusive collaboration with top gaming brands'
   },
   {
-    title: 'Statement Jacket',
+    title: 'Gaming Jacket',
     category: 'Outerwear',
     image: '/images/fashion/jacket.jpg',
     price: '$299',
-    description: 'Sustainable materials'
+    description: 'Tech-infused streetwear for the modern gamer'
+  }
+];
+
+const blogPosts = [
+  {
+    title: "The Evolution of Hip Hop Fashion",
+    excerpt: "From the streets to the runway: How hip hop continues to influence global fashion",
+    image: "/images/blog/hiphop-fashion.jpg",
+    date: "Feb 20, 2024",
+    readTime: "5 min read"
+  },
+  {
+    title: "Gaming Meets Streetwear",
+    excerpt: "How gaming culture is shaping the future of urban fashion",
+    image: "/images/blog/gaming-streetwear.jpg",
+    date: "Feb 18, 2024",
+    readTime: "4 min read"
+  },
+  {
+    title: "The Rise of Tech-Infused Fashion",
+    excerpt: "Exploring how technology is revolutionizing streetwear design",
+    image: "/images/blog/tech-fashion.jpg",
+    date: "Feb 15, 2024",
+    readTime: "6 min read"
   }
 ];
 
@@ -64,9 +91,9 @@ export default function FashionPage() {
         />
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white">
-          <h1 className="mb-4 text-5xl font-bold">Fashion</h1>
+          <h1 className="mb-4 text-5xl font-bold">Urban Fashion</h1>
           <p className="max-w-2xl text-lg">
-            Explore curated collections and trending styles. Discover your unique fashion statement.
+            Where street culture meets high fashion. Discover the latest in urban streetwear, hip hop style, and gaming culture.
           </p>
         </div>
       </section>
@@ -83,6 +110,9 @@ export default function FashionPage() {
               className="aspect-[4/5]"
             >
               <div className="space-y-2 text-white">
+                <span className="inline-block rounded bg-primary px-2 py-1 text-xs">
+                  {collection.category}
+                </span>
                 <h3 className="text-xl font-semibold">{collection.title}</h3>
                 <p className="text-sm text-gray-300">{collection.description}</p>
                 <p>{collection.items}</p>
@@ -95,14 +125,14 @@ export default function FashionPage() {
       {/* Featured Products */}
       <section className="bg-muted/50 px-4 py-16">
         <div className="mx-auto max-w-7xl">
-          <h2 className="mb-8 text-3xl font-bold">Featured Products</h2>
+          <h2 className="mb-8 text-3xl font-bold">Must-Have Pieces</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredProducts.map((product) => (
               <ImageCard
                 key={product.title}
                 src={product.image}
                 alt={product.title}
-                className="aspect-square"
+                className="aspect-[4/5]"
               >
                 <div className="space-y-2 text-white">
                   <span className="inline-block rounded bg-primary px-2 py-1 text-xs">
@@ -118,13 +148,37 @@ export default function FashionPage() {
         </div>
       </section>
 
+      {/* Blog Section */}
+      <section className="mx-auto max-w-7xl px-4 py-16">
+        <h2 className="mb-8 text-3xl font-bold">Fashion Culture</h2>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {blogPosts.map((post) => (
+            <ImageCard
+              key={post.title}
+              src={post.image}
+              alt={post.title}
+              className="aspect-[4/5]"
+            >
+              <div className="space-y-2 text-white">
+                <h3 className="text-xl font-semibold">{post.title}</h3>
+                <p className="text-sm text-gray-300">{post.excerpt}</p>
+                <div className="flex items-center justify-between text-sm">
+                  <span>{post.date}</span>
+                  <span>{post.readTime}</span>
+                </div>
+              </div>
+            </ImageCard>
+          ))}
+        </div>
+      </section>
+
       {/* Newsletter */}
       <section className="mx-auto max-w-7xl px-4 py-16">
         <div className="rounded-lg bg-muted p-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-4 text-2xl font-bold">Stay in Style</h2>
+            <h2 className="mb-4 text-2xl font-bold">Stay Fresh</h2>
             <p className="mb-6 text-muted-foreground">
-              Subscribe to our newsletter for fashion trends, style tips, and exclusive offers.
+              Subscribe to our newsletter for the latest drops, style tips, and urban fashion news.
             </p>
             <div className="flex gap-2">
               <Input

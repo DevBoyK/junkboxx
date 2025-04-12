@@ -13,6 +13,7 @@
     --popover: 0 0% 0%;
     --popover-foreground: 0 0% 100%;
     
+    /* Core Brand Colors */
     --primary: 270 100% 50%; /* Purple to match logo */
     --primary-foreground: 0 0% 100%;
     
@@ -32,6 +33,19 @@
     --input: 0 0% 20%;
     --ring: 270 100% 50%;
     
+    /* Page-Specific Colors */
+    --music-primary: 270 100% 50%;
+    --music-secondary: 330 100% 50%;
+    
+    --tech-primary: 190 100% 50%;
+    --tech-secondary: 210 100% 50%;
+    
+    --fashion-primary: 0 100% 50%;
+    --fashion-secondary: 30 100% 50%;
+    
+    --restaurants-primary: 160 100% 50%;
+    --restaurants-secondary: 140 100% 50%;
+    
     --radius: 0.5rem;
   }
 }
@@ -44,4 +58,41 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+/* Page-Specific Background Gradients */
+.music-page {
+  background: linear-gradient(135deg, hsl(var(--music-primary)) 0%, hsl(var(--music-secondary)) 100%);
+}
+
+.tech-page {
+  background: linear-gradient(135deg, hsl(var(--tech-primary)) 0%, hsl(var(--tech-secondary)) 100%);
+}
+
+.fashion-page {
+  background: linear-gradient(135deg, hsl(var(--fashion-primary)) 0%, hsl(var(--fashion-secondary)) 100%);
+}
+
+.restaurants-page {
+  background: linear-gradient(135deg, hsl(var(--restaurants-primary)) 0%, hsl(var(--restaurants-secondary)) 100%);
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus styles */
+:focus-visible {
+  @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+}
+
+/* Skip to main content */
+.skip-to-main {
+  @apply absolute -top-12 left-0 bg-primary text-primary-foreground px-4 py-2 rounded-b-lg transition-transform duration-200 focus:top-0;
 } 

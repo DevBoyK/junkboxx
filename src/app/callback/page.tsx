@@ -1,60 +1,59 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getAccessToken, setAuthCookies } from "@/lib/auth";
-import { Suspense } from "react";
-
-function CallbackContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const error = searchParams.get("error");
-    const code = searchParams.get("code");
-
-    if (error) {
-      router.push(`/login?error=${error}`);
-      return;
-    }
-
-    if (code) {
-      const handleCallback = async () => {
-        try {
-          const { accessToken, refreshToken, expiresIn } = await getAccessToken(code);
-          await setAuthCookies(accessToken, refreshToken, expiresIn);
-          router.push("/");
-        } catch (error) {
-          console.error("Error handling callback:", error);
-          router.push("/login?error=authentication_failed");
-        }
-      };
-
-      handleCallback();
-    }
-  }, [searchParams, router]);
-
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold mb-4">Authenticating...</h1>
-        <p className="text-gray-400">Please wait while we complete the authentication process.</p>
-      </div>
-    </div>
-  );
-}
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/auth-context";
+import { Loader2 } from "lucide-react";
 
 export default function CallbackPage() {
-  return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Loading...</h1>
-          <p className="text-gray-400">Please wait while we process your request.</p>
-        </div>
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { login } = useAuth();
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function handleCallback() {
+      try {
+        const code = searchParams.get("code");
+        const state = searchParams.get("state");
+
+        if (code && state) {
+          await login({ code, state });
+          router.push("/");
+        } else {
+          throw new Error("Missing code or state parameter");
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Authentication failed");
+        setTimeout(() => {
+          router.push("/login");
+        }, 3000);
+      }
+    }
+
+    handleCallback();
+  }, [router, searchParams, login]);
+
+  if (error) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center">
+        <div className="text-destructive">{error}</div>
+        <Button
+          variant="outline"
+          className="mt-4"
+          onClick={() => router.push("/login")}
+        >
+          Back to Login
+        </Button>
       </div>
-    }>
-      <CallbackContent />
-    </Suspense>
+    );
+  }
+
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      <p className="mt-4 text-muted-foreground">Connecting to Spotify...</p>
+    </div>
   );
 } 
