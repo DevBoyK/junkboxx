@@ -1,0 +1,18 @@
+{
+  "loading": "Loading...",
+  "error": "An error occurred",
+  "success": "Success",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "search": "Search",
+  "noResults": "No results found",
+  "tryAgain": "Try again",
+  "goBack": "Go back",
+  "next": "Next",
+  "previous": "Previous",
+  "submit": "Submit",
+  "required": "Required",
+  "optional": "Optional"
+} 

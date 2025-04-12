@@ -1,5 +1,7 @@
-import { createInstance } from 'i18next';
+import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+import Backend from 'i18next-http-backend';
 import { LanguageMetadata, SupportedLanguages, Translation } from './types';
 import enUS from './locales/en-US';
 import es from './locales/es';
@@ -21,52 +23,64 @@ export const languageMetadata: LanguageMetadata = {
   'fa': { dir: 'rtl', name: 'فارسی' },
 };
 
+// Define supported languages
+export const supportedLangs = ['en', 'es', 'fr'] as const;
+export type SupportedLang = typeof supportedLangs[number];
+
+// Define translation namespace types
+export const namespaces = [
+  'common',
+  'nav',
+  'auth',
+  'home',
+  'products',
+  'cart',
+  'profile'
+] as const;
+export type Namespace = typeof namespaces[number];
+
+// Define translation key types
+export type TranslationKey = 
+  | `nav.${string}`
+  | `auth.${string}`
+  | `home.${string}`
+  | `products.${string}`
+  | `cart.${string}`
+  | `profile.${string}`
+  | `common.${string}`;
+
 // Create a new i18next instance
-const i18n = createInstance();
+const i18nInstance = i18n;
 
-// Get initial language
-const getInitialLanguage = (): SupportedLanguages => {
-  if (typeof window === 'undefined') return 'en-US';
-  
-  const savedLang = localStorage.getItem('preferred-language') as SupportedLanguages;
-  if (savedLang && savedLang in languageMetadata) return savedLang;
-
-  const browserLang = navigator.language;
-  const supportedLang = Object.keys(languageMetadata).find(
-    lang => browserLang.startsWith(lang)
-  ) as SupportedLanguages;
-  
-  return supportedLang || 'en-US';
-};
-
-i18n
+i18nInstance
+  .use(Backend)
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    debug: process.env.NODE_ENV === 'development',
-    fallbackLng: 'en-US',
-    supportedLngs: Object.keys(languageMetadata) as SupportedLanguages[],
+    fallbackLng: 'en',
+    supportedLngs: supportedLangs,
+    ns: namespaces,
     defaultNS: 'common',
-    lng: getInitialLanguage(),
+    fallbackNS: 'common',
+    load: 'languageOnly', // Only load language without region
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage'],
+      lookupLocalStorage: 'i18nextLng',
+    },
+    backend: {
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
+    },
     interpolation: {
       escapeValue: false,
-    },
-    resources: {
-      'en-US': enUS as Translation,
-      'es': es as Translation,
-      'ja': ja as Translation,
     },
     react: {
       useSuspense: false,
     },
-  })
-  .catch(error => {
-    console.error('Failed to initialize i18next:', error);
-    // Ensure we always have a working instance
-    return i18n;
   });
 
 // Add language change handler
-i18n.on('languageChanged', (lng: string) => {
+i18nInstance.on('languageChanged', (lng: string) => {
   const metadata = languageMetadata[lng as keyof typeof languageMetadata];
   if (metadata) {
     document.documentElement.dir = metadata.dir;
@@ -74,4 +88,18 @@ i18n.on('languageChanged', (lng: string) => {
   }
 });
 
-export default i18n; 
+// Validation function for translation keys
+export function isValidTranslationKey(key: string): key is TranslationKey {
+  return namespaces.some(ns => key.startsWith(`${ns}.`));
+}
+
+// Helper function to get translation with type checking
+export function t(key: TranslationKey, options?: Record<string, unknown>): string {
+  if (!isValidTranslationKey(key)) {
+    console.warn(`Invalid translation key: ${key}`);
+    return key;
+  }
+  return i18nInstance.t(key, options);
+}
+
+export default i18nInstance; 

@@ -1,0 +1,18 @@
+{
+  "music": "Music",
+  "tech": "Tech",
+  "fashion": "Fashion",
+  "lifestyle": "Lifestyle",
+  "art": "Art",
+  "home": "Home",
+  "cart": "Cart",
+  "login": "Login",
+  "logout": "Logout",
+  "profile": "Profile",
+  "selectLanguage": "Select Language",
+  "language": {
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French"
+  }
+} 

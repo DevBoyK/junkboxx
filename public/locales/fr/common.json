@@ -1,0 +1,18 @@
+{
+  "loading": "Chargement...",
+  "error": "Une erreur est survenue",
+  "success": "Succès",
+  "save": "Enregistrer",
+  "cancel": "Annuler",
+  "delete": "Supprimer",
+  "edit": "Modifier",
+  "search": "Rechercher",
+  "noResults": "Aucun résultat trouvé",
+  "tryAgain": "Réessayer",
+  "goBack": "Retour",
+  "next": "Suivant",
+  "previous": "Précédent",
+  "submit": "Envoyer",
+  "required": "Requis",
+  "optional": "Optionnel"
+} 
