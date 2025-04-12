@@ -27,6 +27,9 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+.env.development
+.env.test
+.env.production
 
 # vercel
 .vercel
@@ -43,3 +46,17 @@ next-env.d.ts
 *.db
 *.sqlite
 *.sqlite3
+
+# Logs
+logs
+*.log
+
+# Cache
+.cache
+.npm
+.eslintcache
+
+# Optional
+*.swp
+*.swo
+*~

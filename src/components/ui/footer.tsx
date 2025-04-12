@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Facebook, Twitter, Instagram, Youtube, Github } from "lucide-react";
+import { Facebook, Twitter, Instagram, Youtube, Github, Spotify } from "lucide-react";
 
 const categories = [
   { name: "Tech", href: "/tech" },
@@ -33,6 +33,8 @@ const social = [
 ];
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-black border-t border-white/10">
       <div className="max-w-7xl mx-auto py-12 px-4">
@@ -118,7 +120,13 @@ export function Footer() {
         {/* Bottom */}
         <div className="pt-8 border-t border-white/10">
           <p className="text-gray-400 text-sm text-center">
-            © {new Date().getFullYear()} JunkBoxx. All rights reserved.
+            © {currentYear} JunkBoxx. All rights reserved.
+          </p>
+          <p className="text-gray-400 text-sm text-center">
+            This site is not affiliated with Spotify AB.
+          </p>
+          <p className="text-gray-400 text-sm text-center">
+            Spotify and the Spotify logo are trademarks of Spotify AB.
           </p>
         </div>
       </div>

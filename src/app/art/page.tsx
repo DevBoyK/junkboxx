@@ -2,43 +2,48 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ImageCard } from "@/components/ui/image-card-new";
+import { ImageCard } from "@/components/ui/image-card";
 import { ArrowRight } from "lucide-react";
 
-const featuredArtists = [
+const featuredArtworks = [
   {
-    name: "Sarah Chen",
-    specialty: "Digital Art",
-    image: "/images/art/artist-1.jpg",
-    description: "Creating vibrant digital landscapes",
+    title: 'Abstract Harmony',
+    artist: 'Sarah Chen',
+    image: '/images/art/abstract-harmony.jpg',
+    medium: 'Oil on Canvas',
+    price: '$2,500'
   },
   {
-    name: "Marcus Rivera",
-    specialty: "Contemporary",
-    image: "/images/art/artist-2.jpg",
-    description: "Pushing boundaries in modern art",
+    title: 'Urban Dreams',
+    artist: 'Marcus Rivera',
+    image: '/images/art/urban-dreams.jpg',
+    medium: 'Mixed Media',
+    price: '$1,800'
   },
   {
-    name: "Emma Thompson",
-    specialty: "Mixed Media",
-    image: "/images/art/artist-3.jpg",
-    description: "Blending traditional and digital techniques",
-  },
+    title: 'Digital Fusion',
+    artist: 'Alex Kim',
+    image: '/images/art/digital-fusion.jpg',
+    medium: 'Digital Art',
+    price: '$950'
+  }
 ];
 
 const currentExhibitions = [
   {
-    title: "Digital Renaissance",
-    date: "March 1-30, 2024",
-    image: "/images/art/exhibition-1.jpg",
-    description: "Exploring the intersection of technology and classical art",
+    title: 'Modern Perspectives',
+    curator: 'Emily Watson',
+    image: '/images/art/modern-perspectives.jpg',
+    dates: 'Jan 15 - Mar 30, 2024',
+    description: 'A curated collection exploring contemporary artistic vision'
   },
   {
-    title: "Urban Canvas",
-    date: "April 15-May 15, 2024",
-    image: "/images/art/exhibition-2.jpg",
-    description: "Street art meets gallery spaces",
-  },
+    title: 'Digital Renaissance',
+    curator: 'David Park',
+    image: '/images/art/digital-renaissance.jpg',
+    dates: 'Feb 1 - Apr 15, 2024',
+    description: 'Where traditional art meets digital innovation'
+  }
 ];
 
 const artCollections = [
@@ -66,42 +71,39 @@ export default function ArtPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative h-[70vh] overflow-hidden">
+      <section className="relative h-[60vh] w-full overflow-hidden">
         <video
           autoPlay
           muted
           loop
-          className="absolute inset-0 w-full h-full object-cover"
-          poster="/images/art/hero-poster.jpg"
-        >
-          <source src="/videos/art-hero.mp4" type="video/mp4" />
-        </video>
+          className="absolute inset-0 h-full w-full object-cover"
+          src="/videos/art-hero.mp4"
+        />
         <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center">
-          <h1 className="text-6xl font-bold text-white mb-6">Art</h1>
-          <p className="text-xl text-white/90 max-w-2xl">
-            Discover contemporary artists, exhibitions, and collections that push the boundaries of creativity.
+        <div className="relative z-10 flex h-full flex-col items-center justify-center text-center text-white">
+          <h1 className="mb-4 text-5xl font-bold">Art</h1>
+          <p className="max-w-2xl text-lg">
+            Discover unique artworks from emerging and established artists. From traditional to digital, find pieces that speak to you.
           </p>
         </div>
       </section>
 
-      {/* Featured Artists */}
-      <section className="py-16 container mx-auto px-4">
-        <h2 className="text-4xl font-bold mb-8">Featured Artists</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredArtists.map((artist) => (
+      {/* Featured Artworks */}
+      <section className="mx-auto max-w-7xl px-4 py-16">
+        <h2 className="mb-8 text-3xl font-bold">Featured Artworks</h2>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {featuredArtworks.map((artwork) => (
             <ImageCard
-              key={artist.name}
-              src={artist.image}
-              alt={artist.name}
-              className="aspect-[3/4]"
+              key={artwork.title}
+              src={artwork.image}
+              alt={artwork.title}
+              className="aspect-[4/5]"
             >
-              <div className="text-white">
-                <span className="inline-block px-2 py-1 bg-primary rounded text-sm mb-2">
-                  {artist.specialty}
-                </span>
-                <h3 className="text-xl font-semibold mb-2">{artist.name}</h3>
-                <p className="text-white/90">{artist.description}</p>
+              <div className="space-y-2 text-white">
+                <h3 className="text-xl font-semibold">{artwork.title}</h3>
+                <p>{artwork.artist}</p>
+                <p className="text-sm text-gray-300">{artwork.medium}</p>
+                <p className="font-medium">{artwork.price}</p>
               </div>
             </ImageCard>
           ))}
@@ -109,21 +111,22 @@ export default function ArtPage() {
       </section>
 
       {/* Current Exhibitions */}
-      <section className="py-16 bg-muted">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-8">Current Exhibitions</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <section className="bg-muted/50 px-4 py-16">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="mb-8 text-3xl font-bold">Current Exhibitions</h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             {currentExhibitions.map((exhibition) => (
               <ImageCard
                 key={exhibition.title}
                 src={exhibition.image}
                 alt={exhibition.title}
-                className="aspect-[16/9]"
+                className="aspect-video"
               >
-                <div className="text-white">
-                  <h3 className="text-2xl font-semibold mb-2">{exhibition.title}</h3>
-                  <p className="text-white/90 mb-2">{exhibition.description}</p>
-                  <p className="text-primary-foreground font-medium">{exhibition.date}</p>
+                <div className="space-y-2 text-white">
+                  <h3 className="text-2xl font-semibold">{exhibition.title}</h3>
+                  <p className="text-sm">Curated by {exhibition.curator}</p>
+                  <p className="text-sm text-gray-300">{exhibition.dates}</p>
+                  <p>{exhibition.description}</p>
                 </div>
               </ImageCard>
             ))}
@@ -131,40 +134,25 @@ export default function ArtPage() {
         </div>
       </section>
 
-      {/* Art Collections */}
-      <section className="py-16 container mx-auto px-4">
-        <h2 className="text-4xl font-bold mb-8">Art Collections</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {artCollections.map((collection) => (
-            <ImageCard
-              key={collection.title}
-              src={collection.image}
-              alt={collection.title}
-              className="aspect-[4/3]"
-            >
-              <div className="text-white">
-                <h3 className="text-xl font-semibold mb-2">{collection.title}</h3>
-                <p className="text-white/90 mb-2">{collection.pieces}</p>
-                <p className="text-lg font-bold">{collection.price}</p>
-              </div>
-            </ImageCard>
-          ))}
-        </div>
-      </section>
-
       {/* Newsletter */}
-      <section className="py-16 container mx-auto px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">Stay Inspired</h2>
-          <p className="text-muted-foreground mb-8">
-            Subscribe to our newsletter for the latest art news, exhibitions, and artist features.
-          </p>
-          <div className="flex gap-4 max-w-md mx-auto">
-            <Input type="email" placeholder="Enter your email" />
-            <Button>
-              Subscribe
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+      <section className="mx-auto max-w-7xl px-4 py-16">
+        <div className="rounded-lg bg-muted p-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="mb-4 text-2xl font-bold">Stay Updated</h2>
+            <p className="mb-6 text-muted-foreground">
+              Subscribe to our newsletter for the latest art exhibitions, new arrivals, and exclusive previews.
+            </p>
+            <div className="flex gap-2">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="flex-1"
+              />
+              <Button>
+                Subscribe
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </section>

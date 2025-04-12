@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/ui/navbar";
 import { Footer } from "@/components/ui/footer";
+import { AuthProvider } from '@/components/providers/auth-provider';
+import { ErrorBoundary } from '@/components/providers/error-boundary';
+import { CookieConsent } from "@/components/ui/cookie-consent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,11 +23,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-grow pt-16">{children}</main>
-          <Footer />
-        </div>
+        <AuthProvider>
+          <ErrorBoundary>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-grow pt-16">{children}</main>
+              <Footer />
+              <CookieConsent />
+            </div>
+          </ErrorBoundary>
+        </AuthProvider>
       </body>
     </html>
   );
