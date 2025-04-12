@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Play, ShoppingCart, Star, Headphones, Gamepad, Laptop, Shirt } from "lucide-react";
 import { useLanguage } from '@/components/providers/language-provider';
+import Image from "next/image";
+import Link from "next/link";
 
 const categories = [
   {
@@ -106,31 +108,32 @@ export default function HomePage() {
   const { t } = useLanguage();
 
   return (
-    <main className="min-h-screen bg-black">
+    <main className="flex min-h-screen flex-col">
       {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-center justify-center">
-        <video
-          autoPlay
-          loop
-          muted
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/videos/hero.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-black/50" />
-        <div className="relative z-10 text-center px-4">
-          <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
+      <section className="relative flex flex-col items-center justify-center py-20 px-4 text-center bg-gradient-to-b from-background to-muted">
+        <div className="max-w-4xl mx-auto">
+          <div className="mb-8">
+            <Image
+              src="/logos/junkboxx_logo_medium.png"
+              alt={t('nav.home')}
+              width={400}
+              height={120}
+              className="mx-auto w-full max-w-[400px] h-auto"
+              priority
+            />
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
             {t('home.hero.title')}
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-8">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-8">
             {t('home.hero.subtitle')}
           </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Button size="lg" className="bg-purple-600 hover:bg-purple-700">
-              {t('home.hero.explore')}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button size="lg" className="w-full sm:w-auto">
+              {t('home.hero.explore')} <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <Button size="lg" variant="outline">
-              <ShoppingCart className="mr-2 h-5 w-5" /> {t('home.hero.shop')}
+            <Button variant="outline" size="lg" className="w-full sm:w-auto">
+              {t('home.hero.shop')} <ShoppingCart className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </div>
@@ -139,19 +142,22 @@ export default function HomePage() {
       {/* Categories */}
       <section className="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center text-white">Browse Categories</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center text-white">
+            {t('products.featured')}
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category) => (
-              <a
+              <Link
                 key={category.name}
                 href={category.href}
                 className="group relative overflow-hidden rounded-xl bg-gray-900 p-6 transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-purple-500/20"
+                aria-label={`${category.name} - ${category.description}`}
               >
                 <div className={`absolute top-0 right-0 w-24 h-24 ${category.color} opacity-10 rounded-full -mr-6 -mt-6`} />
-                <category.icon className="h-8 w-8 text-white mb-4" />
+                <category.icon className="h-8 w-8 text-white mb-4" aria-hidden="true" />
                 <h3 className="text-xl font-bold text-white mb-2">{category.name}</h3>
                 <p className="text-gray-400">{category.description}</p>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -160,26 +166,35 @@ export default function HomePage() {
       {/* Featured Products */}
       <section className="py-20 px-4 bg-black">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center text-white">Featured Products</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center text-white">
+            {t('products.featured')}
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredProducts.map((product) => (
               <div
                 key={product.title}
                 className="group relative overflow-hidden rounded-xl bg-gray-900 p-6 transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-purple-500/20"
+                role="article"
+                aria-label={`${product.title} - ${product.description}`}
               >
                 <div className={`absolute top-0 right-0 px-3 py-1 ${product.bgColor} text-white text-sm rounded-bl-lg`}>
                   {product.category}
                 </div>
                 <div className="h-48 mb-4 bg-gray-800 rounded-lg flex items-center justify-center group-hover:bg-gray-700 transition-colors relative overflow-hidden">
-                  <div className={`w-24 h-24 ${product.bgColor} rounded-full opacity-75 group-hover:scale-110 transition-transform`} />
-                  <div className={`absolute -right-8 -top-8 w-32 h-32 ${product.bgColor} opacity-10 rounded-full blur-2xl`} />
-                  <div className={`absolute -left-8 -bottom-8 w-32 h-32 ${product.bgColor} opacity-10 rounded-full blur-2xl`} />
+                  <Image
+                    src={`/products/${product.title.toLowerCase().replace(/\s+/g, '-')}.jpg`}
+                    alt={product.title}
+                    width={200}
+                    height={200}
+                    className="object-cover w-full h-full"
+                    priority
+                  />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{product.title}</h3>
                 <p className="text-gray-400 mb-4">{product.description}</p>
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex items-center">
-                    <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                    <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" aria-hidden="true" />
                     <span className="text-white ml-1">{product.rating}</span>
                   </div>
                   <span className="text-gray-500">({product.reviews})</span>
@@ -187,7 +202,7 @@ export default function HomePage() {
                 <div className="flex justify-between items-center">
                   <span className="text-xl font-bold text-white">{product.price}</span>
                   <Button variant="outline" className="text-white border-white hover:bg-white hover:text-black">
-                    Add to Cart
+                    {t('products.addToCart')}
                   </Button>
                 </div>
               </div>
@@ -199,21 +214,31 @@ export default function HomePage() {
       {/* Trending Content */}
       <section className="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center text-white">Trending Now</h2>
+          <h2 className="text-4xl font-bold mb-12 text-center text-white">
+            {t('articles.featured')}
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {trendingContent.map((content) => (
               <div
                 key={content.title}
                 className="group relative overflow-hidden rounded-xl bg-gray-800 hover:bg-gray-700 transition-all hover:-translate-y-2 hover:shadow-xl hover:shadow-purple-500/20"
+                role="article"
+                aria-label={`${content.title} - ${content.description}`}
               >
                 <div className={`h-48 ${content.bgColor} relative overflow-hidden`}>
+                  <Image
+                    src={`/content/${content.title.toLowerCase().replace(/\s+/g, '-')}.jpg`}
+                    alt={content.title}
+                    width={400}
+                    height={200}
+                    className="object-cover w-full h-full"
+                    priority
+                  />
                   <div className="absolute inset-0 flex items-center justify-center">
                     {content.type === "Album" && (
-                      <Play className="h-12 w-12 text-white opacity-75 group-hover:opacity-100 transition-opacity" />
+                      <Play className="h-12 w-12 text-white opacity-75 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                     )}
                   </div>
-                  <div className={`absolute -right-8 -top-8 w-48 h-48 bg-white opacity-10 rounded-full blur-3xl group-hover:opacity-20 transition-opacity`} />
-                  <div className={`absolute -left-8 -bottom-8 w-48 h-48 bg-white opacity-10 rounded-full blur-3xl group-hover:opacity-20 transition-opacity`} />
                 </div>
                 <div className="p-6">
                   <div className="flex justify-between items-center mb-3">
@@ -227,7 +252,7 @@ export default function HomePage() {
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">{content.stats}</span>
                     <Button variant="ghost" className="text-white hover:text-white hover:bg-gray-600">
-                      Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                      {t('articles.readMore')} <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
                     </Button>
                   </div>
                 </div>
@@ -240,7 +265,9 @@ export default function HomePage() {
       {/* Newsletter */}
       <section className="py-20 px-4 bg-gradient-to-b from-gray-900 to-black">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4 text-white">Stay in the Loop</h2>
+          <h2 className="text-4xl font-bold mb-4 text-white">
+            {t('newsletter.title')}
+          </h2>
           <p className="text-xl text-gray-400 mb-8">
             {t('newsletter.subtitle')}
           </p>
@@ -249,6 +276,7 @@ export default function HomePage() {
               type="email"
               placeholder={t('newsletter.placeholder')}
               className="flex-1 bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
+              aria-label={t('newsletter.placeholder')}
             />
             <Button>
               {t('newsletter.subscribe')}
