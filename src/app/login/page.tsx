@@ -19,7 +19,13 @@ function LoginContent() {
   const handleLogin = () => {
     const clientId = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
     const redirectUri = process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI;
-    const scope = "user-read-email user-read-private";
+    const scope = "user-read-email user-read-private playlist-read-private playlist-read-collaborative";
+    
+    if (!clientId || !redirectUri) {
+      console.error("Missing Spotify credentials");
+      return;
+    }
+
     const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scope}`;
     window.location.href = authUrl;
   };

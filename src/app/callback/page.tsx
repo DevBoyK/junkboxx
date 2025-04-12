@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getAccessToken } from "@/lib/auth";
+import { getAccessToken, setAuthCookies } from "@/lib/auth";
 import { Suspense } from "react";
 
 function CallbackContent() {
@@ -21,13 +21,12 @@ function CallbackContent() {
     if (code) {
       const handleCallback = async () => {
         try {
-          const { accessToken, refreshToken } = await getAccessToken(code);
-          localStorage.setItem("spotify_access_token", accessToken);
-          localStorage.setItem("spotify_refresh_token", refreshToken);
+          const { accessToken, refreshToken, expiresIn } = await getAccessToken(code);
+          await setAuthCookies(accessToken, refreshToken, expiresIn);
           router.push("/");
         } catch (error) {
           console.error("Error handling callback:", error);
-          router.push("/login?error=callback_failed");
+          router.push("/login?error=authentication_failed");
         }
       };
 
