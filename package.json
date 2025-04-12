@@ -29,6 +29,8 @@
     "country-flag-icons": "^1.5.9",
     "framer-motion": "^11.0.3",
     "i18next": "^23.8.2",
+    "i18next-browser-languagedetector": "^8.0.4",
+    "i18next-http-backend": "^3.0.2",
     "jose": "^5.2.2",
     "lucide-react": "^0.331.0",
     "next": "14.2.28",
