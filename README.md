@@ -41,38 +41,18 @@ A modern e-commerce platform with integrated music streaming capabilities.
 - Optimized animations and transitions
 - Lazy loading for below-the-fold content
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js 18.x or later
 - npm 9.x or later
-- Spotify Developer Account
-
-### Environment Variables
-
-Create a `.env.local` file in the root directory with the following variables:
-
-```env
-# Spotify
-NEXT_PUBLIC_SPOTIFY_CLIENT_ID=your_spotify_client_id
-NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=http://localhost:3000/callback
-SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
-
-# Admin
-ADMIN_USERNAME=your_admin_username
-ADMIN_PASSWORD_HASH=your_bcrypt_hashed_password
-JWT_SECRET=your_jwt_secret
-
-# Next.js
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-```
 
 ### Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/junkboxx.git
+git clone https://github.com/DevBoyK/junkboxx.git
 cd junkboxx
 ```
 
@@ -81,73 +61,113 @@ cd junkboxx
 npm install
 ```
 
-3. Run the development server:
+3. Create a `.env.local` file in the root directory and add your environment variables:
+```env
+SPOTIFY_CLIENT_ID=your_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+SPOTIFY_REDIRECT_URI=http://localhost:3000/api/auth/callback
+ADMIN_USERNAME=your_admin_username
+ADMIN_PASSWORD_HASH=your_bcrypt_hashed_password
+```
+
+### Development
+
+Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Testing
+## 🧪 Testing
 
-Run the test suite:
+The project uses Jest and React Testing Library for testing. Run tests with:
+
 ```bash
+# Run tests
 npm test
-```
 
-Run tests in watch mode:
-```bash
+# Run tests in watch mode
 npm run test:watch
-```
 
-Generate coverage report:
-```bash
+# Run tests with coverage
 npm run test:coverage
 ```
 
-## Project Structure
+### Test Coverage Requirements
+
+- Branches: 80%
+- Functions: 80%
+- Lines: 80%
+- Statements: 80%
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 14.1.0
+- **Language:** TypeScript
+- **UI Components:** 
+  - Radix UI
+  - Tailwind CSS
+- **State Management:** React Context
+- **Authentication:** Custom JWT + Spotify OAuth
+- **Internationalization:** i18next
+- **Testing:** Jest + React Testing Library
+- **Linting:** ESLint
+- **Code Formatting:** Prettier
+
+## 📦 Project Structure
 
 ```
 src/
-├── app/              # Next.js pages and API routes
-│   ├── ui/          # Base UI components
-│   ├── providers/   # Context providers
-│   └── layouts/     # Layout components
-├── components/       # Reusable UI components
-├── lib/             # Utility functions and services
-├── i18n/            # Internationalization
-└── tests/           # Test files
+├── app/                 # Next.js app router pages
+├── components/          # React components
+│   ├── providers/      # Context providers
+│   └── ui/             # UI components
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions
+└── types/              # TypeScript type definitions
 ```
 
-## Security Best Practices
+## 🔐 Authentication
 
-1. Always use environment variables for sensitive data
-2. Keep dependencies updated
-3. Use HTTPS in production
-4. Implement rate limiting
-5. Validate all user input
-6. Use secure cookie settings
-7. Implement proper error handling
+The application uses a hybrid authentication system:
+- JWT-based authentication for admin users
+- Spotify OAuth for regular users
+- Public access to most pages with protected routes for specific features
 
-## Accessibility Best Practices
+## 🌐 Internationalization
 
-1. Use semantic HTML elements
-2. Provide alternative text for images
-3. Ensure keyboard navigation
-4. Maintain proper color contrast
-5. Use ARIA attributes appropriately
-6. Test with screen readers
-7. Follow WCAG guidelines
+Supports multiple languages:
+- English (en)
+- Spanish (es)
+- French (fr)
 
-## Performance Best Practices
+## 🎨 Theming
 
-1. Optimize images and assets
-2. Implement lazy loading
-3. Use proper caching strategies
-4. Minimize JavaScript bundle size
-5. Optimize CSS delivery
-6. Monitor Core Web Vitals
-7. Use performance budgets
+Supports light and dark modes using `next-themes`.
+
+## 📝 Development Notes
+
+- The project uses the Next.js App Router
+- API routes are located in `src/app/api`
+- Environment variables must be properly configured for all features to work
+- Rate limiting is implemented for API routes
+- Mobile-responsive design with a custom navigation menu
+
+## 🔄 Version Control
+
+- Main branch: Production-ready code
+- Dev branch: Development and testing
+
+## 📋 Dependencies
+
+Key dependencies and their versions:
+- react: ^18.2.0
+- react-dom: ^18.2.0
+- next: ^14.1.0
+- typescript: ^5
+- @testing-library/react: ^14.1.2
+- @testing-library/jest-dom: ^6.1.5
 
 ## Contributing
 

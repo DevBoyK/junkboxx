@@ -5,7 +5,14 @@ const config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '\\.(css|less|sass|scss)$': 'identity-obj-proxy',
   },
+  transform: {
+    '^.+\\.(ts|tsx)$': ['ts-jest', {
+      tsconfig: 'tsconfig.jest.json'
+    }],
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
@@ -20,6 +27,14 @@ const config = {
       statements: 80,
     },
   },
+  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+  transformIgnorePatterns: [
+    '/node_modules/',
+    '^.+\\.module\\.(css|sass|scss)$',
+  ],
+  modulePathIgnorePatterns: [
+    '<rootDir>/.next'
+  ]
 };
 
 module.exports = config; 

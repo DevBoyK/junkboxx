@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom';
+require('@testing-library/jest-dom');
 
 // Mock environment variables
 process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID = 'test-client-id';
