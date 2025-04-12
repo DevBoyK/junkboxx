@@ -1,80 +1,70 @@
 "use client";
 
-import { Package, Music2, TrendingUp } from "lucide-react";
-
-const stats = [
-  {
-    name: "Total Products",
-    value: "0",
-    icon: Package,
-    description: "Products in your store",
-  },
-  {
-    name: "Active Playlists",
-    value: "0",
-    icon: Music2,
-    description: "Spotify playlists",
-  },
-  {
-    name: "Monthly Views",
-    value: "0",
-    icon: TrendingUp,
-    description: "Last 30 days",
-  },
-];
+import { useAdmin } from '@/components/providers/admin-provider';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function AdminDashboard() {
+  const { isAdmin, isLoading } = useAdmin();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && !isAdmin) {
+      router.push('/admin/login');
+    }
+  }, [isAdmin, isLoading, router]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return null;
+  }
+
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Dashboard</h1>
-      </div>
-
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {stats.map((stat) => (
-          <div
-            key={stat.name}
-            className="group relative overflow-hidden rounded-lg bg-card p-6 shadow-md transition-all hover:shadow-lg"
-          >
-            <div className="flex items-center">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <stat.icon className="h-6 w-6 text-primary" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-muted-foreground">
-                  {stat.name}
-                </p>
-                <p className="text-2xl font-semibold">{stat.value}</p>
-              </div>
-            </div>
-            <p className="mt-4 text-sm text-muted-foreground">
-              {stat.description}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        {/* Recent Activity Section */}
-        <div className="rounded-lg bg-card p-6">
-          <h2 className="text-lg font-semibold">Recent Activity</h2>
-          <div className="mt-4">
-            <p className="text-sm text-muted-foreground">
-              No recent activity to show.
-            </p>
-          </div>
+    <div className="min-h-screen p-8">
+      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="p-6 bg-white rounded-lg shadow">
+          <h2 className="text-xl font-semibold mb-4">Quick Actions</h2>
+          <ul className="space-y-2">
+            <li>
+              <button className="text-blue-600 hover:text-blue-800">
+                View Analytics
+              </button>
+            </li>
+            <li>
+              <button className="text-blue-600 hover:text-blue-800">
+                Manage Users
+              </button>
+            </li>
+            <li>
+              <button className="text-blue-600 hover:text-blue-800">
+                System Settings
+              </button>
+            </li>
+          </ul>
         </div>
-
-        {/* Quick Actions Section */}
-        <div className="rounded-lg bg-card p-6">
-          <h2 className="text-lg font-semibold">Quick Actions</h2>
-          <div className="mt-4 grid gap-4">
-            <button className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
-              Add New Product
-            </button>
-            <button className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
-              Create Playlist
-            </button>
+        <div className="p-6 bg-white rounded-lg shadow">
+          <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
+          <p className="text-gray-500">No recent activity</p>
+        </div>
+        <div className="p-6 bg-white rounded-lg shadow">
+          <h2 className="text-xl font-semibold mb-4">System Status</h2>
+          <div className="space-y-2">
+            <div className="flex items-center">
+              <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+              <span>System Online</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+              <span>Database Connected</span>
+            </div>
           </div>
         </div>
       </div>

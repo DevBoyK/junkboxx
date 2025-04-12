@@ -165,4 +165,42 @@
 - Follow security best practices
 - Implement proper testing
 
+## Admin Panel
+
+### Access
+- URL: https://junkboxx.vercel.app/admin
+- Authentication: Spotify login required
+- Access Control: Protected route for authorized users only
+
+### Features
+1. **Dashboard**
+   - Overview of key metrics
+   - Quick actions for common tasks
+   - Recent activity monitoring
+
+2. **Products Management**
+   - Add new products
+   - Edit existing products
+   - Delete products
+   - Manage product categories
+   - Update pricing and availability
+
+3. **Playlists Management**
+   - Create new playlists
+   - Edit playlist details
+   - Manage playlist visibility
+   - Update playlist content
+
+4. **Settings**
+   - Site configuration
+   - User management
+   - General settings
+   - Security settings
+
+### Security
+- Protected routes with authentication
+- Role-based access control
+- Secure session management
+- Audit logging for admin actions
+
 ## Last Updated: April 12, 2024 

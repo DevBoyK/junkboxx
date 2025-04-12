@@ -1,9 +1,14 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getAuthCookies } from '@/lib/auth';
+import { getToken } from 'next-auth/jwt';
+import { NextRequestWithAuth } from 'next-auth/middleware';
 
 // Add paths that don't require authentication
 const publicPaths = ['/login', '/callback', '/api/auth'];
+
+// List of admin email addresses (should be moved to environment variables)
+const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(',') || [];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -30,6 +35,26 @@ export async function middleware(request: NextRequest) {
   }
 }
 
+export async function middlewareAdmin(request: NextRequestWithAuth) {
+  const token = await getToken({ req: request });
+  const isAdminRoute = request.nextUrl.pathname.startsWith('/admin');
+
+  // If trying to access admin routes
+  if (isAdminRoute) {
+    // If not authenticated, redirect to login
+    if (!token) {
+      return NextResponse.redirect(new URL('/login', request.url));
+    }
+
+    // If authenticated but not admin, redirect to home
+    if (!ADMIN_EMAILS.includes(token.email as string)) {
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+  }
+
+  return NextResponse.next();
+}
+
 export const config = {
   matcher: [
     /*
@@ -40,5 +65,7 @@ export const config = {
      * - public folder
      */
     '/((?!_next/static|_next/image|favicon.ico|public/).*)',
+    '/admin/:path*',
+    '/api/admin/:path*',
   ],
 }; 
