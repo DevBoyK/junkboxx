@@ -24,6 +24,11 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        brand: {
+          DEFAULT: "#FF4D4D", // Bright red from logo
+          light: "#FF8080", // Lighter shade
+          dark: "#CC0000", // Darker shade
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

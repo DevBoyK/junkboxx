@@ -110,8 +110,8 @@ export function Navbar() {
                   key={category.href}
                   href={category.href}
                   className={cn(
-                    "text-lg font-semibold transition-all duration-200 hover:text-accent hover:scale-105",
-                    pathname === category.href ? "text-accent" : "text-foreground"
+                    "text-lg font-semibold transition-all duration-200 hover:text-brand hover:scale-105",
+                    pathname === category.href ? "text-brand" : "text-foreground"
                   )}
                 >
                   {t(category.name)}
@@ -186,8 +186,8 @@ export function Navbar() {
                   key={category.href}
                   href={category.href}
                   className={cn(
-                    "block text-lg font-semibold transition-all duration-200 hover:text-accent hover:scale-105",
-                    pathname === category.href ? "text-accent" : "text-foreground"
+                    "block text-lg font-semibold transition-all duration-200 hover:text-brand hover:scale-105",
+                    pathname === category.href ? "text-brand" : "text-foreground"
                   )}
                   onClick={() => setIsMenuOpen(false)}
                 >
