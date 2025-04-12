@@ -52,9 +52,16 @@ export function LanguagePicker() {
   const router = useRouter();
   const { t, i18n } = useTranslation();
   const { language, setLanguage } = useLanguage();
+  const [mounted, setMounted] = useState(false);
   const storage = safeLocalStorage();
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     // Initial language detection
     if (!storage.getItem('preferred-language')) {
       const browserLang = navigator.language;
@@ -77,9 +84,10 @@ export function LanguagePicker() {
       document.documentElement.dir = metadata.dir;
       document.documentElement.lang = language;
     }
-  }, [language]);
+  }, [language, mounted]);
 
   const handleLanguageChange = async (langCode: SupportedLanguages) => {
+    if (!mounted) return;
     if (!(langCode in languageMetadata)) {
       console.error(`Unsupported language code: ${langCode}`);
       return;
@@ -109,6 +117,10 @@ export function LanguagePicker() {
       handleLanguageChange('en-US');
     }
   };
+
+  if (!mounted) {
+    return null; // Don't render anything during SSR
+  }
 
   const FlagIcon = flagComponents[language as keyof typeof flagComponents] || flagComponents['en-US'];
   const currentMetadata = languageMetadata[language as keyof typeof languageMetadata];

@@ -6,12 +6,12 @@ import { safeLocalStorage } from '@/lib/utils';
 type Language = 'en' | 'es' | 'fr';
 type TranslationKey = keyof typeof translations.en;
 
-type LanguageContextType = {
+interface LanguageContextType {
   language: Language;
-  setLanguage: (language: Language) => void;
+  setLanguage: (lang: Language) => void;
   translations: typeof translations;
   t: (key: TranslationKey) => string;
-};
+}
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
@@ -154,20 +154,20 @@ const translations = {
 } as const;
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguageState] = useState<Language>('en');
   const storage = safeLocalStorage();
 
   useEffect(() => {
-    // Load language preference from localStorage
-    const savedLanguage = storage.getItem('language') as Language;
-    if (savedLanguage && translations[savedLanguage]) {
-      setLanguage(savedLanguage);
+    // Only run on client side
+    const savedLanguage = storage.getItem('language') as Language | null;
+    if (savedLanguage && ['en', 'es', 'fr'].includes(savedLanguage)) {
+      setLanguageState(savedLanguage);
     }
   }, []);
 
-  const handleSetLanguage = (newLanguage: Language) => {
-    setLanguage(newLanguage);
-    storage.setItem('language', newLanguage);
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    storage.setItem('language', lang);
   };
 
   const t = (key: TranslationKey) => {
@@ -178,7 +178,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     <LanguageContext.Provider
       value={{
         language,
-        setLanguage: handleSetLanguage,
+        setLanguage,
         translations,
         t,
       }}
