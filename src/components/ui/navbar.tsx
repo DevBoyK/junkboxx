@@ -3,19 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/hooks/use-auth";
-import { useLanguage } from "@/hooks/use-language";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/contexts/auth-context";
+import { useTheme } from "@/contexts/theme-context";
 import { Button } from "@/components/ui/button";
-import { User, LogOut, Settings, Menu, X, ShoppingCart, Sun, Moon } from "lucide-react";
-import { LanguagePicker } from "@/components/ui/language-picker";
+import { Sun, Moon, ShoppingCart, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useTheme } from "@/hooks/use-theme";
 
 // Define the translation keys type
 type TranslationKey = 
@@ -46,10 +38,29 @@ const categories: Category[] = [
   { name: 'nav.art', href: '/art' },
 ];
 
+// Temporary translation function until we implement i18n
+const t = (key: TranslationKey) => {
+  const translations: Record<TranslationKey, string> = {
+    'nav.music': 'Music',
+    'nav.tech': 'Tech',
+    'nav.fashion': 'Fashion',
+    'nav.lifestyle': 'Lifestyle',
+    'nav.art': 'Art',
+    'nav.home': 'Home',
+    'nav.cart': 'Cart',
+    'nav.login': 'Login',
+    'nav.logout': 'Logout',
+    'cookie.message': 'We use cookies to improve your experience.',
+    'cookie.accept': 'Accept',
+    'cookie.reject': 'Reject',
+    'articles.category': 'Category',
+  };
+  return translations[key] || key;
+};
+
 export function Navbar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
-  const { t, language, setLanguage } = useLanguage();
   const { theme, toggleTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -69,12 +80,6 @@ export function Navbar() {
   const handleLogout = () => {
     logout();
     window.location.href = '/';
-  };
-
-  const handleLanguageChange = (newLanguage: 'en' | 'es' | 'fr') => {
-    setLanguage(newLanguage);
-    // Force a page refresh to apply language changes
-    window.location.reload();
   };
 
   return (
@@ -102,26 +107,13 @@ export function Navbar() {
                       : 'text-foreground/60'
                   }`}
                 >
-                  {t(`nav.${category.name}`)}
+                  {t(category.name)}
                 </Link>
               ))}
             </div>
 
             {/* Right side items */}
             <div className="flex items-center space-x-4">
-              {/* Language Selector */}
-              <div className="relative">
-                <select
-                  value={language}
-                  onChange={(e) => handleLanguageChange(e.target.value as 'en' | 'es' | 'fr')}
-                  className="bg-transparent text-sm text-foreground/60 hover:text-foreground focus:outline-none"
-                >
-                  <option value="en">EN</option>
-                  <option value="es">ES</option>
-                  <option value="fr">FR</option>
-                </select>
-              </div>
-
               {/* Theme Toggle */}
               <Button
                 variant="ghost"
@@ -186,7 +178,7 @@ export function Navbar() {
             <div className="px-4 py-2 space-y-2">
               {categories.map((category) => (
                 <Link
-                  key={category.href}
+                  key={category.name}
                   href={category.href}
                   className={`block py-2 text-sm font-medium transition-colors hover:text-primary ${
                     pathname === category.href
