@@ -25,6 +25,8 @@ export function safeLocalStorage() {
       setItem: () => {},
       removeItem: () => {},
       clear: () => {},
+      key: () => null,
+      length: 0
     };
   }
   return window.localStorage;
