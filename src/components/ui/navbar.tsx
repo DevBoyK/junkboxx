@@ -82,11 +82,11 @@ export function Navbar() {
       <a href="#main-content" className="skip-to-content">
         Skip to main content
       </a>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="text-xl font-bold">
+            <Link href="/" className="text-xl font-bold text-foreground">
               JunkBoxx
             </Link>
 
