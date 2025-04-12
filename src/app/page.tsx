@@ -115,7 +115,7 @@ export default function Home() {
             Your gateway to tech, gaming, music, and urban culture
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button size="lg" className="bg-purple-600 hover:bg-purple-700">
+            <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white">
               Explore Now <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-black">

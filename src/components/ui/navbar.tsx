@@ -26,7 +26,7 @@ export function Navbar() {
   const { isAuthenticated, user, login, logout } = useAuth();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
@@ -44,10 +44,10 @@ export function Navbar() {
                 key={category.name}
                 href={category.href}
                 className={cn(
-                  'text-sm font-medium transition-colors hover:text-primary',
+                  'text-sm font-medium transition-colors hover:text-white',
                   pathname === category.href
-                    ? 'text-primary'
-                    : 'text-muted-foreground'
+                    ? 'text-white'
+                    : 'text-gray-400'
                 )}
               >
                 {category.name}
@@ -60,7 +60,7 @@ export function Navbar() {
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+                  <Button variant="ghost" className="relative h-8 w-8 rounded-full hover:bg-white/10">
                     {user?.images?.[0]?.url ? (
                       <img
                         src={user.images[0].url}
@@ -68,25 +68,25 @@ export function Navbar() {
                         className="h-8 w-8 rounded-full"
                       />
                     ) : (
-                      <User className="h-5 w-5" />
+                      <User className="h-5 w-5 text-white" />
                     )}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
+                <DropdownMenuContent align="end" className="bg-black/90 border-white/10">
                   <DropdownMenuItem asChild>
-                    <Link href="/settings" className="flex items-center">
+                    <Link href="/settings" className="flex items-center text-white hover:bg-white/10">
                       <Settings className="mr-2 h-4 w-4" />
                       Settings
                     </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={logout} className="flex items-center">
+                  <DropdownMenuItem onClick={logout} className="flex items-center text-white hover:bg-white/10">
                     <LogOut className="mr-2 h-4 w-4" />
                     Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button onClick={login} variant="outline">
+              <Button onClick={login} variant="outline" className="text-white border-white hover:bg-white hover:text-black">
                 Sign in
               </Button>
             )}
