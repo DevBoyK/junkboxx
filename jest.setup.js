@@ -1,17 +1,36 @@
 require('@testing-library/jest-dom');
 
 // Mock environment variables
-process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID = 'test-client-id';
-process.env.NEXT_PUBLIC_SPOTIFY_REDIRECT_URI = 'http://localhost:3000/callback';
-process.env.JWT_SECRET = 'test-jwt-secret';
+process.env.SPOTIFY_CLIENT_ID = 'test_client_id';
+process.env.SPOTIFY_CLIENT_SECRET = 'test_client_secret';
+process.env.SPOTIFY_REDIRECT_URI = 'http://localhost:3000/api/auth/callback';
+process.env.ADMIN_USERNAME = 'test_admin';
+process.env.ADMIN_PASSWORD_HASH = 'test_hash';
+
+// Mock Next.js router
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    back: jest.fn(),
+    query: {},
+    pathname: '/',
+    asPath: '/',
+    events: {
+      on: jest.fn(),
+      off: jest.fn(),
+      emit: jest.fn(),
+    },
+  }),
+}));
 
 // Mock localStorage
 const localStorageMock = {
   getItem: jest.fn(),
   setItem: jest.fn(),
-  clear: jest.fn(),
   removeItem: jest.fn(),
-  length: 0,
+  clear: jest.fn(),
 };
 global.localStorage = localStorageMock;
 
@@ -23,15 +42,6 @@ global.fetch = jest.fn(() =>
     status: 200,
   })
 );
-
-// Mock next/router
-jest.mock('next/router', () => ({
-  useRouter: () => ({
-    push: jest.fn(),
-    replace: jest.fn(),
-    prefetch: jest.fn(),
-  }),
-}));
 
 // Mock next/navigation
 jest.mock('next/navigation', () => ({
