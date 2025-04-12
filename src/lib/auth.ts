@@ -1,3 +1,4 @@
+// Updated auth implementation using cookies-next for better compatibility
 import { setCookie, getCookie, deleteCookie } from 'cookies-next';
 import { spotifyApi } from './spotify';
 
