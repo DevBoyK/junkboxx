@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { spotifyApi } from '@/lib/spotify';
-import { getAuthCookies, refreshAccessToken } from '@/lib/auth';
+import { getAuthCookies, refreshAccessToken, clearAuthCookies } from '@/lib/auth';
 
 interface AuthContextType {
   isAuthenticated: boolean;
