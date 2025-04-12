@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Play, ShoppingCart, Star, Headphones, Gamepad, Laptop, Shirt } from "lucide-react";
+import { useLanguage } from '@/components/providers/language-provider';
 
 const categories = [
   {
@@ -101,25 +102,35 @@ const trendingContent = [
   }
 ];
 
-export default function Home() {
+export default function HomePage() {
+  const { t } = useLanguage();
+
   return (
     <main className="min-h-screen bg-black">
       {/* Hero Section */}
       <section className="relative h-[80vh] flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-900 via-blue-900 to-black opacity-90" />
+        <video
+          autoPlay
+          loop
+          muted
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 text-center px-4">
           <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
-            JunkBoxx
+            {t('home.hero.title')}
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-8">
-            Your gateway to tech, gaming, music, and urban culture
+            {t('home.hero.subtitle')}
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Button size="lg" className="bg-purple-600 hover:bg-purple-700">
-              Explore Now <ArrowRight className="ml-2 h-5 w-5" />
+              {t('home.hero.explore')}
             </Button>
             <Button size="lg" variant="outline">
-              <ShoppingCart className="mr-2 h-5 w-5" /> Shop Products
+              <ShoppingCart className="mr-2 h-5 w-5" /> {t('home.hero.shop')}
             </Button>
           </div>
         </div>
@@ -231,16 +242,16 @@ export default function Home() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-4 text-white">Stay in the Loop</h2>
           <p className="text-xl text-gray-400 mb-8">
-            Get the latest updates on tech, gaming, music, and urban culture
+            {t('newsletter.subtitle')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <Input
               type="email"
-              placeholder="Enter your email"
+              placeholder={t('newsletter.placeholder')}
               className="flex-1 bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
             />
             <Button>
-              Subscribe <ArrowRight className="ml-2 h-4 w-4" />
+              {t('newsletter.subscribe')}
             </Button>
           </div>
         </div>

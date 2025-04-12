@@ -28,13 +28,6 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const checkAdminStatus = async () => {
       try {
-        // Check if admin credentials are configured
-        if (!process.env.NEXT_PUBLIC_ADMIN_ENABLED) {
-          setError('Admin system not properly configured');
-          setIsLoading(false);
-          return;
-        }
-
         // Get session token and CSRF token from cookies
         const sessionToken = document.cookie
           .split('; ')

@@ -1,179 +1,117 @@
 # JunkBoxx
 
-A modern e-commerce platform for tech, gaming, music, and urban culture.
-
-## Project Status
-
-- **Main Branch**: Production-ready
-- **Dev Branch**: Active development
-- **Latest Update**: Authentication system improvements and bug fixes
-- **Next Steps**: Database integration and e-commerce features
+A modern e-commerce platform with integrated music streaming capabilities.
 
 ## Features
 
-- 🌐 **Internationalization**
-  - Support for 12 languages including RTL languages (Arabic, Hebrew, Persian)
-  - Automatic language detection based on browser settings
-  - Persistent language preferences
-  - Country flags for visual language selection
+- Spotify integration for music streaming
+- Multi-language support
+- Secure authentication
+- Admin dashboard
+- Responsive design
+- Dark/Light mode
 
-- ♿ **Accessibility**
-  - WCAG 2.1 compliant
-  - Screen reader support
-  - Keyboard navigation
-  - Skip to content link
-  - Reduced motion support
-  - High contrast mode
-  - ARIA labels and roles
+## Security Features
 
-- 🎨 **Modern UI/UX**
-  - Responsive design
-  - Dark mode support
-  - Smooth animations
-  - Modern component library
-  - Tailwind CSS styling
-
-- 🔒 **Authentication**
-  - Spotify OAuth integration
-  - Secure session management
-  - Protected routes
-  - User preferences persistence
-
-## Tech Stack
-
-- **Framework**: Next.js 14
-- **Styling**: Tailwind CSS
-- **UI Components**: Radix UI
-- **Database**: PostgreSQL
-- **ORM**: Prisma
-- **Authentication**: Spotify OAuth, Custom Admin Auth
-- **Deployment**: Vercel
+- JWT-based authentication
+- CSRF protection
+- Rate limiting
+- Secure cookie handling
+- Environment variable validation
+- Error logging and monitoring
 
 ## Getting Started
 
-1. Clone the repository
-   ```bash
-   git clone https://github.com/DevBoyK/junkboxx.git
-   cd junkboxx
-   ```
+### Prerequisites
 
-2. Switch to development branch
-   ```bash
-   git checkout dev
-   ```
+- Node.js 18.x or later
+- npm 9.x or later
+- Spotify Developer Account
 
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
+### Environment Variables
 
-4. Set up environment variables:
-   - Copy `.env.example` to `.env.local`
-   - Fill in required environment variables:
-     ```
-     # Spotify API
-     SPOTIFY_CLIENT_ID=your_client_id
-     SPOTIFY_CLIENT_SECRET=your_client_secret
-     SPOTIFY_REDIRECT_URI=http://localhost:3000/callback
-     NEXT_PUBLIC_SPOTIFY_CLIENT_ID=your_client_id
-     NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=http://localhost:3000/callback
+Create a `.env.local` file in the root directory with the following variables:
 
-     # Admin Authentication
-     ADMIN_USERNAME=admin
-     ADMIN_PASSWORD_HASH=hashed_password
+```env
+# Spotify
+NEXT_PUBLIC_SPOTIFY_CLIENT_ID=your_spotify_client_id
+NEXT_PUBLIC_SPOTIFY_REDIRECT_URI=http://localhost:3000/callback
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
 
-     # Database
-     DATABASE_URL=your_database_url
-     ```
+# Admin
+ADMIN_USERNAME=your_admin_username
+ADMIN_PASSWORD_HASH=your_bcrypt_hashed_password
+JWT_SECRET=your_jwt_secret
 
-5. Set up the database:
-   ```bash
-   npx prisma generate
-   npx prisma db push
-   ```
+# Next.js
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+```
 
-6. Run the development server:
-   ```bash
-   npm run dev
-   ```
+### Installation
 
-## Development Workflow
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/junkboxx.git
+cd junkboxx
+```
 
-1. Create a feature branch from dev:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
+2. Install dependencies:
+```bash
+npm install
+```
 
-2. Make your changes and commit:
-   ```bash
-   git add .
-   git commit -m "feat: your feature description"
-   ```
+3. Run the development server:
+```bash
+npm run dev
+```
 
-3. Push to your feature branch:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-4. Create a Pull Request to merge into dev branch
+## Testing
+
+Run the test suite:
+```bash
+npm test
+```
+
+Run tests in watch mode:
+```bash
+npm run test:watch
+```
+
+Generate coverage report:
+```bash
+npm run test:coverage
+```
 
 ## Project Structure
 
 ```
 src/
-├── app/                    # Next.js app router pages
-├── components/            
-│   ├── ui/                # Reusable UI components
-│   └── providers/         # Context providers
-├── i18n/                  # Internationalization
-│   ├── locales/           # Language translations
-│   ├── config.ts          # i18next configuration
-│   └── types.ts           # Translation types
-├── lib/                   # Utility functions
-└── styles/                # Global styles
+├── app/              # Next.js pages and API routes
+├── components/       # Reusable UI components
+├── lib/             # Utility functions and services
+├── i18n/            # Internationalization
+└── tests/           # Test files
 ```
 
-## Internationalization
+## Security Best Practices
 
-The application supports multiple languages with RTL support. Language selection is persisted in localStorage and automatically detects the user's preferred language.
-
-### Supported Languages
-- English (US/UK)
-- Spanish
-- French
-- German
-- Italian
-- Japanese
-- Korean
-- Chinese
-- Arabic (RTL)
-- Hebrew (RTL)
-- Persian (RTL)
-
-### Adding New Translations
-
-1. Create a new translation file in `src/i18n/locales/`
-2. Add the language to `languageMetadata` in `src/i18n/config.ts`
-3. Import and add the translation to the i18n resources
-
-## Accessibility Features
-
-- Skip to content link for keyboard users
-- ARIA labels for interactive elements
-- Role attributes for semantic HTML
-- Focus management
-- Reduced motion support
-- Screen reader announcements
-- Keyboard navigation support
-- High contrast mode
+1. Always use environment variables for sensitive data
+2. Keep dependencies updated
+3. Use HTTPS in production
+4. Implement rate limiting
+5. Validate all user input
+6. Use secure cookie settings
+7. Implement proper error handling
 
 ## Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
@@ -181,7 +119,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Next.js team for the amazing framework
-- Vercel for hosting and deployment
-- Spotify for their API
-- All contributors and maintainers
+- [Next.js](https://nextjs.org/)
+- [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Radix UI](https://www.radix-ui.com/)
