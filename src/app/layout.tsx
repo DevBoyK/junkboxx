@@ -5,6 +5,7 @@ import { Footer } from "@/components/ui/footer";
 import { CookieConsent } from "@/components/ui/cookie-consent";
 import { RootProviders } from "@/components/providers/root-providers";
 import { metadata } from './metadata';
+import { Toaster } from '@/components/ui/toaster';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default function RootLayout({
             <CookieConsent />
           </div>
         </RootProviders>
+        <Toaster />
       </body>
     </html>
   );
