@@ -1,64 +1,43 @@
-# JunkBoxx
+# Junkboxx
 
-A modern e-commerce platform for tech, gaming, music, and urban culture enthusiasts.
-
-## Live Site
-
-The application is currently live at: [https://junkboxx.vercel.app/](https://junkboxx.vercel.app/)
+A modern e-commerce platform built with Next.js 14, featuring a unique blend of music, tech, fashion, and lifestyle products.
 
 ## Features
 
-- 🎵 Music streaming integration with Spotify
-- 🛍️ E-commerce functionality
-- 🎮 Gaming and tech product showcase
-- 👕 Fashion and lifestyle content
-- 🔐 Secure authentication
-- 📱 Responsive design
-- 🎨 Modern UI with Tailwind CSS
+- **Modern UI/UX**: Built with Next.js 14, Tailwind CSS, and Radix UI
+- **Authentication**: Secure login with Spotify and admin authentication
+- **Responsive Design**: Mobile-first approach with beautiful animations
+- **Category Pages**: Dedicated pages for Music, Tech, Fashion, and Lifestyle
+- **Admin Dashboard**: Secure admin interface for content management
+- **API Integration**: Spotify API integration for music features
+- **Database**: PostgreSQL with Prisma ORM
+- **Deployment**: Optimized for Vercel deployment
 
 ## Tech Stack
 
 - **Framework**: Next.js 14
-- **Language**: TypeScript
 - **Styling**: Tailwind CSS
 - **UI Components**: Radix UI
-- **Authentication**: NextAuth.js
 - **Database**: PostgreSQL
 - **ORM**: Prisma
+- **Authentication**: Spotify OAuth, Custom Admin Auth
 - **Deployment**: Vercel
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 18.17 or later
-- npm or yarn
-- PostgreSQL database
-- Spotify Developer Account
-
-### Environment Setup
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/junkboxx.git
-   cd junkboxx
-   ```
-
+1. Clone the repository
 2. Install dependencies:
    ```bash
    npm install
    ```
-
-3. Copy `.env.example` to `.env.local`:
+3. Set up environment variables:
+   - Copy `.env.example` to `.env.local`
+   - Fill in required environment variables
+4. Set up the database:
    ```bash
-   cp .env.example .env.local
+   npx prisma generate
+   npx prisma db push
    ```
-
-4. Update `.env.local` with your credentials:
-   - Get Spotify API credentials from [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
-   - Set up your PostgreSQL database
-   - Generate a secure NEXTAUTH_SECRET
-
 5. Run the development server:
    ```bash
    npm run dev
@@ -66,51 +45,44 @@ The application is currently live at: [https://junkboxx.vercel.app/](https://jun
 
 ## Environment Variables
 
-Required environment variables:
-
-```env
-# Database Configuration
-DATABASE_URL="postgresql://username:password@localhost:5432/junkboxx?schema=public"
-
-# NextAuth Configuration
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your_nextauth_secret"
-
-# Spotify API credentials
-SPOTIFY_CLIENT_ID="your_spotify_client_id"
-SPOTIFY_CLIENT_SECRET="your_spotify_client_secret"
-SPOTIFY_REDIRECT_URI="http://localhost:3000/api/auth/callback/spotify"
-
-# App URL
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-```
+Required environment variables are listed in `.env.example`. Make sure to set up:
+- Spotify API credentials
+- Admin credentials
+- Database URL
+- JWT secret
+- Vercel deployment settings
 
 ## Project Structure
 
 ```
-junkboxx/
-├── src/
-│   ├── app/              # Next.js app directory
-│   ├── components/       # React components
-│   ├── lib/             # Utility functions
-│   └── styles/          # Global styles
-├── public/              # Static assets
-├── prisma/             # Database schema
-└── scripts/            # Utility scripts
+src/
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   ├── (auth)/           # Authentication routes
+│   ├── admin/            # Admin dashboard
+│   └── [category]/       # Category pages
+├── components/            # React components
+│   ├── ui/               # UI components
+│   └── providers/        # Context providers
+├── lib/                  # Utility functions
+└── styles/              # Global styles
 ```
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Support
+## Acknowledgments
 
-For support, email support@junkboxx.com or join our Discord community.
+- Next.js team for the amazing framework
+- Vercel for hosting and deployment
+- Spotify for their API
+- All contributors and maintainers

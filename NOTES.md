@@ -18,47 +18,212 @@
 
 ## Technical Notes
 
+### Authentication System
+
+#### Spotify OAuth Flow
+1. User clicks login button
+2. Redirected to Spotify authorization page
+3. User authorizes application
+4. Callback route handles token exchange
+5. Tokens stored in secure cookies
+6. Session management with refresh token rotation
+
+#### Admin Authentication
+- Custom JWT-based authentication
+- Secure password hashing with bcrypt
+- Session management with HTTP-only cookies
+- Role-based access control
+
+### API Implementation
+
+#### Spotify API Integration
+- Token management with refresh mechanism
+- Rate limiting implementation
+- Error handling and retry logic
+- Secure storage of credentials
+
+#### Custom API Routes
+- RESTful endpoints for admin operations
+- Protected routes with middleware
+- Input validation
+- Error handling and logging
+
+### Database Schema
+
+#### User Model
+```prisma
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+```
+
+#### Product Model
+```prisma
+model Product {
+  id          String    @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  category    Category
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+```
+
+## Security Considerations
+
 ### Authentication
-- Using NextAuth.js with Spotify provider
-- Implemented secure session management
-- Added protected routes for authenticated users
-- Set up proper token refresh mechanism
+- Secure cookie settings
+- Token rotation
+- Password hashing
+- Rate limiting
+- CSRF protection
 
-### Database
-- PostgreSQL as the primary database
-- Prisma for database schema and migrations
-- Implemented proper indexing for better performance
-- Set up database backups and recovery procedures
+### Data Protection
+- Input validation
+- Output sanitization
+- SQL injection prevention
+- XSS protection
 
-### Performance
-- Implemented image optimization
-- Added proper caching strategies
-- Optimized API routes
-- Set up proper error boundaries
-- Implemented loading states
+## Performance Optimization
+
+### Frontend
+- Image optimization
+- Code splitting
+- Lazy loading
+- Caching strategies
+
+### Backend
+- Database indexing
+- Query optimization
+- Caching implementation
+- Rate limiting
+
+## Deployment
+
+### Vercel Configuration
+- Environment variables
+- Build settings
+- Domain configuration
+- SSL/TLS setup
+
+### Monitoring
+- Error tracking
+- Performance monitoring
+- Security scanning
+- Log management
 
 ## Development Guidelines
 
 ### Code Style
-- Use TypeScript for all new code
-- Follow Next.js 14 best practices
-- Use functional components with hooks
-- Implement proper error handling
-- Write unit tests for critical functionality
+- TypeScript strict mode
+- ESLint configuration
+- Prettier formatting
+- Git commit conventions
 
-### Git Workflow
-- Use feature branches for new development
-- Follow conventional commits
-- Review code before merging
-- Keep commits small and focused
-- Write clear commit messages
+### Testing
+- Unit testing setup
+- Integration testing
+- Performance testing
+- Security testing
 
-### Environment Setup
-- Use `.env.local` for local development
-- Never commit sensitive information
-- Keep environment variables in sync
-- Document all required variables
-- Use proper secrets management
+## Recent Updates
+
+### Authentication
+- Added clearAuthCookies import
+- Improved error handling
+- Enhanced security measures
+- Updated token management
+
+### API
+- Improved error responses
+- Added rate limiting
+- Enhanced validation
+- Updated documentation
+
+### Database
+- Schema updates
+- Migration scripts
+- Query optimization
+- Index implementation
+
+## Known Issues and Solutions
+
+### Authentication
+- Token refresh race conditions
+- Session timeout handling
+- Cookie security settings
+- Cross-origin requests
+
+### Performance
+- Image loading optimization
+- Database query optimization
+- API response caching
+- Client-side rendering
+
+## Future Improvements
+
+### Technical
+- Implement GraphQL
+- Add WebSocket support
+- Enhance caching
+- Improve monitoring
+
+### Features
+- Real-time updates
+- Advanced search
+- Social features
+- Analytics dashboard
+
+## Environment Setup
+
+### Required Services
+- PostgreSQL database
+- Redis cache
+- File storage
+- Email service
+
+### Configuration
+- Environment variables
+- API keys
+- Database credentials
+- Service endpoints
+
+## Development Workflow
+
+### Git Flow
+1. Create feature branch
+2. Implement changes
+3. Run tests
+4. Create pull request
+5. Code review
+6. Merge to main
+
+### Deployment Process
+1. Run tests
+2. Build application
+3. Deploy to staging
+4. Run checks
+5. Deploy to production
+
+## Documentation
+
+### API Documentation
+- Endpoint descriptions
+- Request/response formats
+- Authentication requirements
+- Error codes
+
+### Component Documentation
+- Props and types
+- Usage examples
+- Styling guidelines
+- Accessibility notes
 
 ## Recent Changes
 
