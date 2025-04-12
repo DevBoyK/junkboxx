@@ -87,25 +87,24 @@ export function Navbar() {
       <a href="#main-content" className="skip-to-content">
         Skip to main content
       </a>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-black border-b border-border">
         <div className="container mx-auto px-4">
-          <div className="flex h-16 items-center justify-between">
+          <div className="flex h-20 items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="text-xl font-bold text-foreground">
+            <Link href="/" className="text-2xl font-extrabold text-foreground">
               JunkBoxx
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-6">
+            <div className="hidden md:flex space-x-8">
               {categories.map((category) => (
                 <Link
-                  key={category.name}
+                  key={category.href}
                   href={category.href}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    pathname === category.href
-                      ? 'text-primary'
-                      : 'text-foreground/60'
-                  }`}
+                  className={cn(
+                    "text-lg font-semibold transition-colors hover:text-primary",
+                    pathname === category.href ? "text-primary" : "text-foreground"
+                  )}
                 >
                   {t(category.name)}
                 </Link>
@@ -157,34 +156,31 @@ export function Navbar() {
                 )}
               </div>
 
-              {/* Mobile menu button */}
-              <button
-                className="menu-button md:hidden p-2 rounded-md text-foreground/60 hover:text-primary focus:outline-none"
+              {/* Mobile Menu Button */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                {isMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </button>
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
             </div>
           </div>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="mobile-menu md:hidden absolute top-16 left-0 right-0 bg-background border-b border-border shadow-lg">
-            <div className="px-4 py-2 space-y-2">
+          <div className="md:hidden">
+            <div className="space-y-4 py-4">
               {categories.map((category) => (
                 <Link
-                  key={category.name}
+                  key={category.href}
                   href={category.href}
-                  className={`block py-2 text-sm font-medium transition-colors hover:text-primary ${
-                    pathname === category.href
-                      ? 'text-primary'
-                      : 'text-foreground/60'
-                  }`}
+                  className={cn(
+                    "block text-lg font-semibold transition-colors hover:text-primary",
+                    pathname === category.href ? "text-primary" : "text-foreground"
+                  )}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {t(category.name)}
