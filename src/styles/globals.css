@@ -4,49 +4,96 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%; /* Pure black for OLED */
-    --foreground: 0 0% 100%;
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
     
-    --card: 0 0% 0%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
     
-    --popover: 0 0% 0%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
     
     /* Core Brand Colors */
-    --primary: 270 100% 50%; /* Purple to match logo */
-    --primary-foreground: 0 0% 100%;
+    --primary: 142 76% 36%;
+    --primary-foreground: 355.7 100% 97.3%;
     
-    --secondary: 240 100% 50%; /* Blue accent */
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
     
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 100%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
     
-    --accent: 270 100% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
     
-    --destructive: 0 100% 50%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
     
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 270 100% 50%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 142 76% 36%;
     
     /* Page-Specific Colors */
-    --music-primary: 270 100% 50%;
-    --music-secondary: 330 100% 50%;
+    --music-primary: 301 100% 50%;
+    --music-secondary: 334 100% 50%;
     
-    --tech-primary: 190 100% 50%;
-    --tech-secondary: 210 100% 50%;
+    --tech-primary: 217 91% 60%;
+    --tech-secondary: 199 89% 48%;
     
-    --fashion-primary: 0 100% 50%;
-    --fashion-secondary: 30 100% 50%;
+    --gaming-primary: 269 97% 85%;
+    --gaming-secondary: 262 83% 58%;
     
-    --restaurants-primary: 160 100% 50%;
-    --restaurants-secondary: 140 100% 50%;
+    --fashion-primary: 346 77% 49%;
+    --fashion-secondary: 339 84% 46%;
+    
+    --lifestyle-primary: 142 76% 36%;
+    --lifestyle-secondary: 168 75% 39%;
+    
+    --art-primary: 35 92% 58%;
+    --art-secondary: 27 96% 61%;
     
     --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 0 0% 95%;
+    --card: 24 9.8% 10%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 142 70% 45%;
+    --primary-foreground: 144.9 80.4% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142 70% 45%;
+
+    /* Page-specific colors - Dark mode */
+    --music-primary: 301 100% 60%;
+    --music-secondary: 334 100% 60%;
+    
+    --tech-primary: 217 91% 70%;
+    --tech-secondary: 199 89% 58%;
+    
+    --gaming-primary: 269 97% 75%;
+    --gaming-secondary: 262 83% 68%;
+    
+    --fashion-primary: 346 77% 59%;
+    --fashion-secondary: 339 84% 56%;
+    
+    --lifestyle-primary: 142 70% 45%;
+    --lifestyle-secondary: 168 70% 49%;
+    
+    --art-primary: 35 92% 68%;
+    --art-secondary: 27 96% 71%;
   }
 }
 
@@ -62,19 +109,27 @@
 
 /* Page-Specific Background Gradients */
 .music-page {
-  background: linear-gradient(135deg, hsl(var(--music-primary)) 0%, hsl(var(--music-secondary)) 100%);
+  background: linear-gradient(135deg, hsl(var(--music-primary) / 0.1), hsl(var(--music-secondary) / 0.1));
 }
 
 .tech-page {
-  background: linear-gradient(135deg, hsl(var(--tech-primary)) 0%, hsl(var(--tech-secondary)) 100%);
+  background: linear-gradient(135deg, hsl(var(--tech-primary) / 0.1), hsl(var(--tech-secondary) / 0.1));
+}
+
+.gaming-page {
+  background: linear-gradient(135deg, hsl(var(--gaming-primary) / 0.1), hsl(var(--gaming-secondary) / 0.1));
 }
 
 .fashion-page {
-  background: linear-gradient(135deg, hsl(var(--fashion-primary)) 0%, hsl(var(--fashion-secondary)) 100%);
+  background: linear-gradient(135deg, hsl(var(--fashion-primary) / 0.1), hsl(var(--fashion-secondary) / 0.1));
 }
 
-.restaurants-page {
-  background: linear-gradient(135deg, hsl(var(--restaurants-primary)) 0%, hsl(var(--restaurants-secondary)) 100%);
+.lifestyle-page {
+  background: linear-gradient(135deg, hsl(var(--lifestyle-primary) / 0.1), hsl(var(--lifestyle-secondary) / 0.1));
+}
+
+.art-page {
+  background: linear-gradient(135deg, hsl(var(--art-primary) / 0.1), hsl(var(--art-secondary) / 0.1));
 }
 
 /* Accessibility Improvements */

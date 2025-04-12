@@ -72,6 +72,7 @@ export const translations = {
     // Navigation
     'nav.home': 'Home',
     'nav.music': 'Music',
+    'nav.gaming': 'Gaming',
     'nav.tech': 'Tech',
     'nav.fashion': 'Fashion',
     'nav.lifestyle': 'Lifestyle',
@@ -117,6 +118,7 @@ export const translations = {
     // Navigation
     'nav.home': 'Inicio',
     'nav.music': 'Música',
+    'nav.gaming': 'Juegos',
     'nav.tech': 'Tecnología',
     'nav.fashion': 'Moda',
     'nav.lifestyle': 'Estilo de Vida',
@@ -162,6 +164,7 @@ export const translations = {
     // Navigation
     'nav.home': 'Accueil',
     'nav.music': 'Musique',
+    'nav.gaming': 'Jeux',
     'nav.tech': 'Technologie',
     'nav.fashion': 'Mode',
     'nav.lifestyle': 'Style de Vie',

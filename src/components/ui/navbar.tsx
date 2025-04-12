@@ -19,6 +19,7 @@ type Category = {
 
 const categories: Category[] = [
   { name: 'nav.music', href: '/music' },
+  { name: 'nav.gaming', href: '/gaming' },
   { name: 'nav.tech', href: '/tech' },
   { name: 'nav.fashion', href: '/fashion' },
   { name: 'nav.lifestyle', href: '/lifestyle' },
