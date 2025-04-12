@@ -5,7 +5,28 @@ import { getToken } from 'next-auth/jwt';
 import { NextRequestWithAuth } from 'next-auth/middleware';
 
 // Add paths that don't require authentication
-const publicPaths = ['/login', '/callback', '/api/auth'];
+const publicPaths = [
+  '/',
+  '/login',
+  '/callback',
+  '/api/auth',
+  '/tech',
+  '/music',
+  '/fashion',
+  '/lifestyle',
+  '/about',
+  '/contact',
+  '/privacy',
+  '/terms',
+];
+
+// Add paths that require authentication
+const protectedPaths = [
+  '/profile',
+  '/settings',
+  '/checkout',
+  '/orders',
+];
 
 // List of admin email addresses (should be moved to environment variables)
 const ADMIN_EMAILS = process.env.ADMIN_EMAILS?.split(',') || [];
@@ -18,21 +39,27 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  try {
-    const { accessToken, refreshToken } = await getAuthCookies();
+  // Check if the path requires authentication
+  if (protectedPaths.some(path => pathname.startsWith(path))) {
+    try {
+      const { accessToken, refreshToken } = await getAuthCookies();
 
-    // If no tokens are present, redirect to login
-    if (!accessToken && !refreshToken) {
-      const url = new URL('/login', request.url);
-      url.searchParams.set('from', pathname);
-      return NextResponse.redirect(url);
+      // If no tokens are present, redirect to login
+      if (!accessToken && !refreshToken) {
+        const url = new URL('/login', request.url);
+        url.searchParams.set('from', pathname);
+        return NextResponse.redirect(url);
+      }
+
+      return NextResponse.next();
+    } catch (error) {
+      console.error('Middleware error:', error);
+      return NextResponse.redirect(new URL('/login', request.url));
     }
-
-    return NextResponse.next();
-  } catch (error) {
-    console.error('Middleware error:', error);
-    return NextResponse.redirect(new URL('/login', request.url));
   }
+
+  // For all other paths, allow access
+  return NextResponse.next();
 }
 
 export async function middlewareAdmin(request: NextRequestWithAuth) {
