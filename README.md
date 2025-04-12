@@ -5,11 +5,13 @@ A modern e-commerce platform with integrated music streaming capabilities.
 ## Features
 
 - Spotify integration for music streaming
-- Multi-language support
+- Multi-language support (English, Spanish, French)
 - Secure authentication
 - Admin dashboard
 - Responsive design
 - Dark/Light mode
+- Accessibility-first approach
+- Performance optimized
 
 ## Security Features
 
@@ -19,6 +21,25 @@ A modern e-commerce platform with integrated music streaming capabilities.
 - Secure cookie handling
 - Environment variable validation
 - Error logging and monitoring
+
+## Accessibility Features
+
+- ARIA labels for all interactive elements
+- Semantic HTML structure
+- Keyboard navigation support
+- Screen reader compatibility
+- High contrast mode support
+- Focus management
+- Proper heading hierarchy
+
+## Performance Features
+
+- Image optimization with Next.js Image component
+- Priority loading for above-the-fold content
+- Responsive images with proper sizing
+- Efficient state management
+- Optimized animations and transitions
+- Lazy loading for below-the-fold content
 
 ## Getting Started
 
@@ -89,6 +110,9 @@ npm run test:coverage
 ```
 src/
 ├── app/              # Next.js pages and API routes
+│   ├── ui/          # Base UI components
+│   ├── providers/   # Context providers
+│   └── layouts/     # Layout components
 ├── components/       # Reusable UI components
 ├── lib/             # Utility functions and services
 ├── i18n/            # Internationalization
@@ -104,6 +128,26 @@ src/
 5. Validate all user input
 6. Use secure cookie settings
 7. Implement proper error handling
+
+## Accessibility Best Practices
+
+1. Use semantic HTML elements
+2. Provide alternative text for images
+3. Ensure keyboard navigation
+4. Maintain proper color contrast
+5. Use ARIA attributes appropriately
+6. Test with screen readers
+7. Follow WCAG guidelines
+
+## Performance Best Practices
+
+1. Optimize images and assets
+2. Implement lazy loading
+3. Use proper caching strategies
+4. Minimize JavaScript bundle size
+5. Optimize CSS delivery
+6. Monitor Core Web Vitals
+7. Use performance budgets
 
 ## Contributing
 
@@ -123,3 +167,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Spotify Web API](https://developer.spotify.com/documentation/web-api/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Radix UI](https://www.radix-ui.com/)
+- [WCAG Guidelines](https://www.w3.org/WAI/standards-guidelines/wcag/)
