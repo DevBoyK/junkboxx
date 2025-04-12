@@ -115,10 +115,10 @@ export default function Home() {
             Your gateway to tech, gaming, music, and urban culture
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white">
+            <Button size="lg" className="bg-purple-600 hover:bg-purple-700">
               Explore Now <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button size="lg" variant="outline" className="text-white border-white hover:bg-white hover:text-black">
+            <Button size="lg" variant="outline">
               <ShoppingCart className="mr-2 h-5 w-5" /> Shop Products
             </Button>
           </div>
@@ -239,7 +239,7 @@ export default function Home() {
               placeholder="Enter your email"
               className="flex-1 bg-gray-800 border-gray-700 text-white placeholder:text-gray-500"
             />
-            <Button className="bg-purple-600 hover:bg-purple-700 text-white">
+            <Button>
               Subscribe <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
