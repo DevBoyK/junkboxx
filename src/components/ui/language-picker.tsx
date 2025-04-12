@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next';
 import { languageMetadata } from '@/i18n/config';
 import { cn } from '@/lib/utils';
 import { SupportedLanguages } from '@/i18n/types';
+import { useLanguage } from '@/contexts/language-context';
+import { safeLocalStorage } from '@/lib/utils';
 
 const flagComponents = {
   'en-US': US,
@@ -30,16 +32,31 @@ const flagComponents = {
   'fa': IR,
 } as const;
 
+// Map i18n language codes to our supported language codes
+const languageCodeMap: Record<SupportedLanguages, 'en' | 'es' | 'fr'> = {
+  'en-US': 'en',
+  'en-GB': 'en',
+  'es': 'es',
+  'fr': 'fr',
+  'de': 'en',
+  'it': 'en',
+  'ja': 'en',
+  'ko': 'en',
+  'zh': 'en',
+  'ar': 'en',
+  'he': 'en',
+  'fa': 'en',
+};
+
 export function LanguagePicker() {
   const router = useRouter();
   const { t, i18n } = useTranslation();
-  const [currentLang, setCurrentLang] = useState<SupportedLanguages>(
-    (i18n.language as SupportedLanguages) || 'en-US'
-  );
+  const { language, setLanguage } = useLanguage();
+  const storage = safeLocalStorage();
 
   useEffect(() => {
     // Initial language detection
-    if (!localStorage.getItem('preferred-language')) {
+    if (!storage.getItem('preferred-language')) {
       const browserLang = navigator.language;
       const supportedLang = Object.keys(languageMetadata).find(
         lang => browserLang.startsWith(lang)
@@ -49,18 +66,18 @@ export function LanguagePicker() {
     }
 
     // Load saved language preference
-    const savedLang = localStorage.getItem('preferred-language') as SupportedLanguages | null;
-    if (savedLang && savedLang !== currentLang && savedLang in languageMetadata) {
+    const savedLang = storage.getItem('preferred-language') as SupportedLanguages | null;
+    if (savedLang && savedLang !== language && savedLang in languageMetadata) {
       handleLanguageChange(savedLang);
     }
 
     // Set document direction based on language
-    const metadata = languageMetadata[currentLang as keyof typeof languageMetadata];
+    const metadata = languageMetadata[language as keyof typeof languageMetadata];
     if (metadata) {
       document.documentElement.dir = metadata.dir;
-      document.documentElement.lang = currentLang;
+      document.documentElement.lang = language;
     }
-  }, [currentLang]);
+  }, [language]);
 
   const handleLanguageChange = async (langCode: SupportedLanguages) => {
     if (!(langCode in languageMetadata)) {
@@ -69,8 +86,10 @@ export function LanguagePicker() {
     }
 
     try {
-      setCurrentLang(langCode);
-      localStorage.setItem('preferred-language', langCode);
+      const mappedLang = languageCodeMap[langCode];
+      setLanguage(mappedLang);
+      storage.setItem('language', mappedLang);
+      storage.setItem('preferred-language', langCode);
       
       // Change language in i18next
       await i18n.changeLanguage(langCode);
@@ -91,8 +110,8 @@ export function LanguagePicker() {
     }
   };
 
-  const FlagIcon = flagComponents[currentLang as keyof typeof flagComponents] || flagComponents['en-US'];
-  const currentMetadata = languageMetadata[currentLang as keyof typeof languageMetadata];
+  const FlagIcon = flagComponents[language as keyof typeof flagComponents] || flagComponents['en-US'];
+  const currentMetadata = languageMetadata[language as keyof typeof languageMetadata];
 
   return (
     <DropdownMenu>
@@ -118,7 +137,7 @@ export function LanguagePicker() {
               onClick={() => handleLanguageChange(code)}
               className={cn(
                 "flex items-center gap-2 cursor-pointer",
-                code === currentLang && "bg-accent"
+                languageCodeMap[code] === language && "bg-accent"
               )}
             >
               <Flag className="h-4 w-auto" aria-hidden="true" />

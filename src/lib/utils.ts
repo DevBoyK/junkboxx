@@ -16,4 +16,16 @@ export function formatDate(input: string | number | Date): string {
 
 export function absoluteUrl(path: string) {
   return `${process.env.NEXT_PUBLIC_APP_URL}${path}`;
+}
+
+export function safeLocalStorage() {
+  if (typeof window === 'undefined') {
+    return {
+      getItem: () => null,
+      setItem: () => {},
+      removeItem: () => {},
+      clear: () => {},
+    };
+  }
+  return window.localStorage;
 } 
