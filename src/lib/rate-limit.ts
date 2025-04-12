@@ -4,75 +4,86 @@
  */
 
 interface RateLimitOptions {
-  windowMs: number;
-  max: number;
-  message?: string;
+  windowMs: number; // Time window in milliseconds
+  max: number; // Max number of requests per window
 }
 
-interface RateLimitData {
-  count: number;
-  resetTime: number;
+interface RateLimitInfo {
+  limit: number;
+  current: number;
+  remaining: number;
+  reset: number;
 }
 
-class RateLimiter {
+export class RateLimiter {
   private static instance: RateLimiter;
-  private limits: Map<string, RateLimitData>;
   private options: RateLimitOptions;
+  private store: Map<string, { count: number; resetTime: number }>;
 
   private constructor(options: RateLimitOptions) {
-    this.limits = new Map();
     this.options = {
-      windowMs: options.windowMs || 15 * 60 * 1000, // 15 minutes
-      max: options.max || 100,
-      message: options.message || 'Too many requests, please try again later.',
+      windowMs: options.windowMs,
+      max: options.max
     };
+    this.store = new Map();
   }
 
-  public static getInstance(options: RateLimitOptions = {}): RateLimiter {
+  public static getInstance(options: RateLimitOptions = {
+    windowMs: 60 * 1000, // 1 minute
+    max: 100 // 100 requests per minute
+  }): RateLimiter {
     if (!RateLimiter.instance) {
       RateLimiter.instance = new RateLimiter(options);
     }
     return RateLimiter.instance;
   }
 
-  public check(key: string): { allowed: boolean; remaining: number; resetTime: number } {
+  public checkLimit(key: string): RateLimitInfo {
     const now = Date.now();
-    const limit = this.limits.get(key);
+    const record = this.store.get(key);
 
-    if (!limit || now > limit.resetTime) {
-      this.limits.set(key, {
+    if (!record) {
+      this.store.set(key, {
         count: 1,
-        resetTime: now + this.options.windowMs,
+        resetTime: now + this.options.windowMs
       });
       return {
-        allowed: true,
+        limit: this.options.max,
+        current: 1,
         remaining: this.options.max - 1,
-        resetTime: now + this.options.windowMs,
+        reset: now + this.options.windowMs
       };
     }
 
-    if (limit.count >= this.options.max) {
+    if (now > record.resetTime) {
+      record.count = 1;
+      record.resetTime = now + this.options.windowMs;
+      this.store.set(key, record);
       return {
-        allowed: false,
-        remaining: 0,
-        resetTime: limit.resetTime,
+        limit: this.options.max,
+        current: 1,
+        remaining: this.options.max - 1,
+        reset: record.resetTime
       };
     }
 
-    limit.count++;
+    record.count += 1;
+    this.store.set(key, record);
     return {
-      allowed: true,
-      remaining: this.options.max - limit.count,
-      resetTime: limit.resetTime,
+      limit: this.options.max,
+      current: record.count,
+      remaining: Math.max(0, this.options.max - record.count),
+      reset: record.resetTime
     };
   }
 
-  public reset(key: string): void {
-    this.limits.delete(key);
+  public isRateLimited(key: string): boolean {
+    const info = this.checkLimit(key);
+    return info.remaining <= 0;
   }
 
-  public resetAll(): void {
-    this.limits.clear();
+  public clearStore(): void {
+    this.store.clear();
   }
 }
 
