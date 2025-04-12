@@ -28,7 +28,7 @@ const categories: Category[] = [
 export function Navbar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
@@ -62,7 +62,7 @@ export function Navbar() {
       <a href="#main-content" className="skip-to-content">
         {t('common.skipToContent')}
       </a>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="flex h-20 items-center justify-between">
             {/* Logo */}
@@ -84,8 +84,8 @@ export function Navbar() {
                   key={category.href}
                   href={category.href}
                   className={cn(
-                    "text-lg font-semibold transition-all duration-200 hover:text-brand hover:scale-105",
-                    pathname === category.href ? "text-brand" : "text-foreground"
+                    "text-lg font-semibold transition-all duration-200 hover:text-primary hover:scale-105",
+                    pathname === category.href ? "text-primary" : "text-foreground"
                   )}
                 >
                   {t(category.name)}
@@ -101,7 +101,7 @@ export function Navbar() {
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
-                  className="text-foreground hover:text-brand"
+                  className="text-foreground hover:text-primary"
                   aria-label={t('nav.selectLanguage')}
                 >
                   <Globe className="h-5 w-5" />
@@ -113,7 +113,7 @@ export function Navbar() {
                         <button
                           key={lang}
                           onClick={() => handleLanguageChange(lang)}
-                          className="block w-full text-left px-4 py-2 text-sm text-foreground hover:bg-accent hover:text-brand"
+                          className="block w-full text-left px-4 py-2 text-sm text-foreground hover:bg-accent hover:text-primary"
                         >
                           {t(`nav.language.${lang}`)}
                         </button>
@@ -127,8 +127,8 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={toggleTheme}
-                className="text-foreground hover:text-brand"
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="text-foreground hover:text-primary"
                 aria-label={theme === 'dark' ? t('common.lightMode') : t('common.darkMode')}
               >
                 {theme === 'dark' ? (
@@ -141,7 +141,7 @@ export function Navbar() {
               {/* User Actions */}
               <div className="flex items-center space-x-2">
                 <Link href="/cart">
-                  <Button variant="ghost" size="icon" title={t('nav.cart')} className="text-foreground hover:text-brand">
+                  <Button variant="ghost" size="icon" title={t('nav.cart')} className="text-foreground hover:text-primary">
                     <ShoppingCart className="h-5 w-5" />
                   </Button>
                 </Link>
@@ -150,7 +150,7 @@ export function Navbar() {
                     variant="ghost" 
                     size="sm" 
                     onClick={handleLogout}
-                    className="text-foreground hover:text-brand"
+                    className="text-foreground hover:text-primary"
                   >
                     {t('nav.logout')}
                   </Button>
@@ -159,7 +159,7 @@ export function Navbar() {
                     <Button 
                       variant="ghost" 
                       size="sm"
-                      className="text-foreground hover:text-brand"
+                      className="text-foreground hover:text-primary"
                     >
                       {t('nav.login')}
                     </Button>
@@ -171,7 +171,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden text-foreground hover:text-brand"
+                className="md:hidden text-foreground hover:text-primary"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label={isMenuOpen ? t('common.closeMenu') : t('common.openMenu')}
               >
@@ -183,15 +183,15 @@ export function Navbar() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden bg-background border-b border-border">
+          <div className="md:hidden bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
             <div className="container mx-auto px-4 py-4">
               {categories.map((category) => (
                 <Link
                   key={category.href}
                   href={category.href}
                   className={cn(
-                    "block text-lg font-semibold transition-all duration-200 hover:text-brand hover:scale-105 py-2",
-                    pathname === category.href ? "text-brand" : "text-foreground"
+                    "block text-lg font-semibold transition-all duration-200 hover:text-primary hover:scale-105 py-2",
+                    pathname === category.href ? "text-primary" : "text-foreground"
                   )}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -206,7 +206,7 @@ export function Navbar() {
                     <button
                       key={lang}
                       onClick={() => handleLanguageChange(lang)}
-                      className="block w-full text-left text-lg font-semibold text-foreground hover:text-brand"
+                      className="block w-full text-left text-lg font-semibold text-foreground hover:text-primary"
                     >
                       {t(`nav.language.${lang}`)}
                     </button>
