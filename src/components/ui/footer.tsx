@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Facebook, Twitter, Instagram, Youtube, Github, Spotify } from "lucide-react";
+import { Facebook, Twitter, Instagram, Youtube, Github } from "lucide-react";
 
 const categories = [
   { name: "Tech", href: "/tech" },
