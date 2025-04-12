@@ -8,6 +8,7 @@ import { useTheme } from "@/contexts/theme-context";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon, ShoppingCart, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 // Define the translation keys type
 type TranslationKey = 
@@ -91,8 +92,15 @@ export function Navbar() {
         <div className="container mx-auto px-4">
           <div className="flex h-20 items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="text-2xl font-extrabold text-foreground">
-              JunkBoxx
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/logos/junkboxx_logo_small.png"
+                alt="JunkBoxx Logo"
+                width={120}
+                height={40}
+                className="h-10 w-auto"
+                priority
+              />
             </Link>
 
             {/* Desktop Navigation */}
